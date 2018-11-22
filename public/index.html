@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Chameleon</title>
+    <head></head>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        form {
+            float: left;
+            margin-right: 50px;
+        }
+        iframe {
+            width: 1200px;
+            height: 720px;
+            margin-top: 20px;
+        }
+        .form-item + .form-item {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+        }
+        input {
+            padding: 5px 10px;
+        }
+    </style>
+    <body>
+        <h1>Chameleon</h1>
+
+        <iframe id="myIframe" height="640px", width="420px" src=""></iframe>
+
+        <form>
+            <label for="text">Text</label>
+            <input name="text" id="text" type="text">
+            <input type="submit" value="Change colours!">
+        </form> 
+
+        <script src="./main.js"></script>
+    </body>
+</html>
