@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const path = require("path");
 const sass = require("node-sass");
 const fs = require("fs");
+const urldecode = require('urldecode')
 
 const app = express();
 
@@ -37,7 +38,7 @@ app.get("/frame",  async ( req, res ) => {
     let customStyles = '';
 
     Object.keys( colors ).map( ( colorType ) => {
-        const colorValue = colors[ colorType ];
+        const colorValue = colors[ urldecode(colorType) ];
 
         if( colorValue ) {
             customStyles += `${ colorMap[ colorType ] }: ${ colors[ colorType ] };\n`;
