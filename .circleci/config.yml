@@ -1,0 +1,54 @@
+version: 2
+jobs:
+  build-chameleon:
+    docker:
+      - image: circleci/node:10.13.0
+    working_directory: ~/chameleon
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install node modules
+          command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run tests!
+          command:
+            - npm run test
+      - persist_to_workspace:
+          root: ~/chameleon
+          paths:
+            - src
+            - templates
+            - public
+
+
+
+  deploy-chameleon:
+    docker:
+      - image: circleci/node:10.13.0
+    - attach_workspace:
+        at: ~/chameleon
+    steps:
+      - run:
+          name: Deploy site
+          command: |
+            cd ~/chameleon
+            echo "TODO"
+
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build-chameleon
+      - deploy-chameleon:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build-chameleon
