@@ -11,7 +11,11 @@ const uikitSass = fs.readFileSync( './pancake.scss', 'utf-8' );
 
 app.use(helmet());
 
+// Load the index.html 
 app.use('/', express.static(path.join(__dirname, '/../public')))
+
+app.use('/templates', express.static(path.join(__dirname, '/../templates/full-page')))
+
 
 app.get("/frame",  async ( req, res ) => {
 
@@ -41,10 +45,10 @@ app.get("/frame",  async ( req, res ) => {
         outputStyle: 'compressed',
     });
 
-    const html = (await fs.readFileSync(path.join(__dirname, "/../template.html"), "utf-8"))
+    const html = (await fs.readFileSync(path.join(__dirname, "/../templates/full-page/index.html"), "utf-8"))
         .replace("<!--INJECTED STYLES-->",`<style>${css.css}</style>`);
 
     res.send(html);
 });
 
-app.listen(port, () => console.log(`Listening on port ${port} ...`))
+app.listen(port, () => console.log(`Listening on http://localhost:${port} ...`))
