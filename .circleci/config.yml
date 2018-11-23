@@ -24,6 +24,7 @@ jobs:
             - persist_to_workspace:
                 root: ~/chameleon
                 paths:
+                  - .deploy/
                   - node_modules/
                   - src/
                   - templates/
@@ -33,20 +34,47 @@ jobs:
                   - package.json
 
 
-    deploy-chameleon:
+    deploy-chameleon-dev:
         docker:
-            - image: circleci/node:10.13.0
+            - image: govau/cf-cli
         steps:
             - attach_workspace:
                 at: ~/chameleon
-            - run: cd ~/chameleon
+            - run:
+                name: Deploy to cloud.gov.au development
+                command: |
+                    cd ~/chameleon
+                    mv .deploy/manifest-dev.yml .
+                    cf login -a $CF_API_DEV -o $CF_ORG -s $CF_SPACE -u $CF_USER_DEV -p $CF_PASSWORD_STAGING
+                    cf zero-downtime-push chameleon -f manifest-dev.yml
+
+
+    deploy-chameleon-prod:
+        docker:
+            - image: govau/cf-cli
+        steps:
+            - attach_workspace:
+                at: ~/chameleon
+            - run:
+                name: Deploy to cloud.gov.au production
+                command: |
+                    cd ~/chameleon
+                    mv .deploy/manifest-prod.yml .
+                    cf login -a $CF_API_PROD -o $CF_ORG -s $CF_SPACE -u $CF_USER_PROD -p $CF_PASSWORD_PROD
+                    cf zero-downtime-push chameleon -f manifest-prod.yml
 
 workflows:
   version: 2
   deploy-chameleon:
     jobs:
       - build-and-test-chameleon
-      - deploy-chameleon:
+      - deploy-chameleon-dev:
+          requires:
+            - build-and-test-chameleon
+          filters:
+            branches:
+              only: develop
+      - deploy-chameleon-prod:
           requires:
             - build-and-test-chameleon
           filters:
