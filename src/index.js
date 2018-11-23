@@ -6,7 +6,7 @@ const fs = require("fs");
 
 const app = express()
 
-const port = 3000
+const port = process.env.PORT || 3000
 const uikitSass = fs.readFileSync( './pancake.scss', 'utf-8' );
 
 app.use(helmet());
@@ -46,6 +46,8 @@ app.get("/frame",  async ( req, res ) => {
         data:         customStyles + uikitSass,
         outputStyle: 'compressed',
     });
+
+    // Take me to the page I was on not index.html
 
     const html = (await fs.readFileSync(path.join(__dirname, "/../templates/full-page/index.html"), "utf-8"))
         .replace("<!--INJECTED STYLES-->",`<style>${css.css}</style>`);
