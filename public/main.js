@@ -5,10 +5,13 @@
  */
 function ParseParameters( paramString = window.location.search ) {
 	var paramObject = {};
-	paramString.substr( 1 ).split( '&' ).map( value => {
-		const keyValue = value.split( '=' );
-		paramObject[ keyValue[ 0 ] ] = decodeURIComponent( keyValue[ 1 ] ).split( '+' ).join( '' );
-	});
+
+	if ( Object.keys( paramString ).length > 0 ) {
+		paramString.substr( 1 ).split( '&' ).map( value => {
+			const keyValue = value.split( '=' );
+			paramObject[ keyValue[ 0 ] ] = decodeURIComponent( keyValue[ 1 ] ).split( '+' ).join( '' );
+		});
+	}
     
 	return paramObject;
 }
@@ -33,11 +36,8 @@ function FillForm( paramObject = ParseParameters() ){
 }
 
 
-// Apply the colours
-// ApplyColours();
 // Set the default form input equal to the querystring
-// FillForm();
-
-
 FillForm();
+
+// Apply the colours
 ApplyColours();
