@@ -1,54 +1,51 @@
 version: 2
 jobs:
-  build-chameleon:
-    docker:
-      - image: circleci/node:10.13.0
-    working_directory: ~/chameleon
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install node modules
-          command: npm i
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Run tests!
-          command:
-            - npm run test
-      - persist_to_workspace:
-          root: ~/chameleon
-          paths:
-            - src
-            - templates
-            - public
+    build-and-test-chameleon:
+        docker:
+            - image: circleci/node:10.13.0
+        working_directory: ~/chameleon
+        steps:
+            - checkout
+            - restore_cache:
+                name: Restore node_modules from cache
+                keys:
+                  - dependency-cache-{{ checksum "package.json" }}
+            - run:
+                name: Install Node.js dependencies
+                command: npm i
+            - save_cache:
+                name: Save node_modules to cache
+                key: dependency-cache-{{ checksum "package.json" }}
+                paths:
+                  - node_modules
+            - persist_to_workspace:
+                root: ~/chameleon
+                paths:
+                  - node_modules/
+                  - src/
+                  - templates/
+                  - public/
+                  - pancake/
+                  - pancake.scss
+                  - package.json
 
 
-
-  deploy-chameleon:
-    docker:
-      - image: circleci/node:10.13.0
-    - attach_workspace:
-        at: ~/chameleon
-    steps:
-      - run:
-          name: Deploy site
-          command: |
-            cd ~/chameleon
-            echo "TODO"
-
+    deploy-chameleon:
+        docker:
+            - image: circleci/node:10.13.0
+        steps:
+            - attach_workspace:
+                at: ~/chameleon
+            - run: cd ~/chameleon
 
 workflows:
   version: 2
-  build_and_deploy:
+  deploy-chameleon:
     jobs:
-      - build-chameleon
+      - build-and-test-chameleon
       - deploy-chameleon:
+          requires:
+            - build-and-test-chameleon
           filters:
             branches:
               only: master
-          requires:
-            - build-chameleon
