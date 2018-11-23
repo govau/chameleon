@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git+https://github.com/govau/chameleon.git"
   },
+  "engines": {
+    "node": "~10",
+    "npm": "~6"
+  },
   "keywords": [
     "interactive",
     "form",
