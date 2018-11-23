@@ -57,7 +57,8 @@
     "@gov.au/text-inputs": "^2.0.9",
     "express": "^4.16.4",
     "helmet": "^3.15.0",
-    "node-sass": "^4.10.0"
+    "node-sass": "^4.10.0",
+    "urldecode": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
