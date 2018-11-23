@@ -3,8 +3,6 @@
 
 Interactive colour template previews for the Design System.
 
-Development preview is located at: https://chameleon.apps.y.cld.gov.au/
-
 ## Prerequisites: 
 - [Node.js](https://nodejs.org/en/download/) 10 or higher prefereably the LTS release, which at the time of writing is `v10.13.0`
 

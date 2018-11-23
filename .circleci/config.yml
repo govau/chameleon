@@ -28,7 +28,7 @@ jobs:
                   - node_modules/
                   - src/
                   - templates/
-                  - public/
+                  - public/main.js
                   - pancake/
                   - pancake.scss
                   - package.json
