@@ -18,6 +18,9 @@ jobs:
                 key: dependency-cache-{{ checksum "package.json" }}
                 paths:
                   - node_modules
+            - run:
+                name: Run all the tests!
+                command: npm test
             - persist_to_workspace:
                 root: ~/chameleon
                 paths:
