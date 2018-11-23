@@ -15,8 +15,8 @@
             margin-right: 50px;
         }
         iframe {
-            width: 1200px;
-            height: 720px;
+            width: 640px;
+            height: 420px;
             margin-top: 20px;
         }
         .form-item + .form-item {
@@ -35,10 +35,41 @@
         <iframe id="myIframe" height="640px", width="420px" src=""></iframe>
 
         <form>
-            <label for="text">Text</label>
-            <input name="text" id="text" type="text">
-            <input type="submit" value="Change colours!">
-        </form> 
+            <div class="form-item">
+                <label for="text">Text</label>
+                <input name="text" id="text" type="text">
+            </div>
+            <div class="form-item">
+                <label for="action">Action</label>
+                <input name="action" id="action" type="text">
+            </div>
+            <div class="form-item">
+                <label for="focus">Focus</label>
+                <input name="focus" id="focus" type="text">
+            </div>
+            <div class="form-item">
+                <label for="background">Background</label>
+                <input name="background" id="background" type="text">
+            </div>
+            <div class="form-item">
+                <label for="textDark">Dark text</label>
+                <input name="textDark" id="textDark" type="text">
+            </div>
+            <div class="form-item">
+                <label for="actionDark">Dark action</label>
+                <input name="actionDark" id="actionDark" type="text">
+            </div>
+            <div class="form-item">
+                <label for="focusDark">Dark focus</label>
+                <input name="focusDark" id="focusDark" type="text">
+            </div>
+            <div class="form-item">
+                <label for="backgroundDark">Dark background</label>
+                <input name="backgroundDark" id="backgroundDark" type="text">
+            </div>
+    
+            <button>Change colour</button>
+        </form>
 
         <script src="./main.js"></script>
     </body>
