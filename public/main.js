@@ -21,7 +21,7 @@ function ParseParameters( paramString = window.location.search ) {
  * ApplyColors - Applies the colours to the iframe
  */
 function ApplyColours( paramString = window.location.search ){
-	document.getElementById( 'myIframe' ).src = `http://localhost/frame${ paramString }`;
+	document.getElementById( 'myIframe' ).src = `http://localhost:3000/frame${ paramString }`;
 }
 
 

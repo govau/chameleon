@@ -22,7 +22,6 @@ app.get("/frame",  async ( req, res ) => {
 
     const colors = req.query;
 
-    
     const colorMap = {
         text:           '$AU-color-foreground-text',
         action:         '$AU-color-foreground-action',
