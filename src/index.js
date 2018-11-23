@@ -11,10 +11,12 @@ const uikitSass = fs.readFileSync( './pancake.scss', 'utf-8' );
 
 app.use(helmet());
 
-// Load the index.html 
+// Static endpoint for testing and main script to be loaded into DS site.
 app.use('/', express.static(path.join(__dirname, '/../public')))
 
+// Static endpoint for templates to be loaded into iframe
 app.use('/templates', express.static(path.join(__dirname, '/../templates/full-page')))
+
 
 app.get("/frame",  async ( req, res ) => {
 
