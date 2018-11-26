@@ -6,7 +6,7 @@
   "scripts": {
     "pancake": "pancake",
     "start": "nodemon src/index.js localhost 3000 ",
-    "test": "echo \"TODO\" && exit 0"
+    "test": "mocha test/integration/**/*"
   },
   "repository": {
     "type": "git",
@@ -64,6 +64,9 @@
     "node-sass": "^4.10.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.6"
   },
   "pancake": {
