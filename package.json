@@ -71,47 +71,25 @@
     "nodemon": "^1.18.6",
     "supertest": "^3.3.0"
   },
-  "pancake": {
-    "auto-save": true,
-    "plugins": true,
-    "ignore": [],
-    "json": {
-      "enable": false,
-      "location": "./",
-      "name": "pancake",
-      "content": {
-        "name": true,
-        "version": true,
-        "dependencies": true,
-        "path": true,
-        "settings": true
-      }
-    },
-    "css": {
-      "minified": true,
-      "modules": false,
-      "browsers": [
-        "last 2 versions",
-        "ie 8",
-        "ie 9",
-        "ie 10"
-      ],
-      "location": "./",
-      "name": "pancake/pancake.min.css"
-    },
-    "sass": {
-      "modules": false,
-      "location": "./",
-      "name": "pancake.scss"
-    },
-    "js": {
-      "minified": true,
-      "modules": false,
-      "location": "src/static",
-      "name": "pancake.min.js"
-    },
-    "react": {
-      "location": "pancake"
-    }
-  }
+	"pancake": {
+		"auto-save": true,
+		"plugins": true,
+		"ignore": [
+			"@gov.au/pancake-react",
+			"@gov.au/pancake-json",
+			"@gov.au/pancake-js"
+		],
+		"css": {
+			"minified": false,
+			"modules": false,
+			"browsers": [],
+			"location": false,
+			"name": false
+		},
+		"sass": {
+			"modules": false,
+			"location": "templates/",
+			"name": "pancake.scss"
+		}
+	}
 }
