@@ -4,22 +4,23 @@ const path = require("path");
 const sass = require("node-sass");
 const fs = require("fs");
 
-const app = express()
+const app = express();
 
 const port = process.env.PORT || 3000
 const uikitSass = fs.readFileSync( './pancake.scss', 'utf-8' );
 
 app.use(helmet());
 
-// Static endpoint for testing and main script to be loaded into DS site.
+// Static endpoint for clientside scripts
 app.use('/', express.static(path.join(__dirname, '/../public')))
 
-// Static endpoint for templates to be loaded into iframe
+// Static endpoint for developer testing
+process.env.NODE_ENV === "production" ? undefined : app.use('/test', express.static(path.join(__dirname, '/../test/system')))
+
+// Static endpoint for templates
 app.use('/templates', express.static(path.join(__dirname, '/../templates/full-page')))
 
-
 app.get("/frame",  async ( req, res ) => {
-
     const colors = req.query;
 
     const colorMap = {
@@ -48,8 +49,9 @@ app.get("/frame",  async ( req, res ) => {
         outputStyle: 'compressed',
     });
 
-    // Take me to the page I was on not index.html
-
+    /**
+     * @todo Take me to the page I was on, not index.html 
+     */
     const html = (await fs.readFileSync(path.join(__dirname, "/../templates/full-page/index.html"), "utf-8"))
         .replace("<!--INJECTED STYLES-->",`<style>${css.css}</style>`);
 
@@ -57,3 +59,5 @@ app.get("/frame",  async ( req, res ) => {
 });
 
 app.listen(port, () => console.log(`Listening on http://localhost:${port} ...`))
+
+module.exports = app;
