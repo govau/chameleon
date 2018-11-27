@@ -1,76 +1,75 @@
 {
-  "name": "chameleon",
-  "version": "0.1.0",
-  "description": "Interactive colour template previews for the Design System.",
-  "main": "src/index.js",
-  "scripts": {
-    "pancake": "pancake",
-    "start": "node src/index.js localhost 3000",
-    "dev": "nodemon src/index.js localhost 3000",
-    "test": "NODE_ENV=test mocha test/integration/*.js --timeout 10000 --exit"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/govau/chameleon.git"
-  },
-  "engines": {
-    "node": "~10",
-    "npm": "~6"
-  },
-  "keywords": [
-    "interactive",
-    "form",
-    "color",
-    "template",
-    "preview",
-    "design",
-    "system"
-  ],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/govau/chameleon/issues"
-  },
-  "homepage": "https://github.com/govau/chameleon#readme",
-  "dependencies": {
-    "@gov.au/accordion": "^6.0.0",
-    "@gov.au/animate": "^1.0.9",
-    "@gov.au/body": "^2.0.12",
-    "@gov.au/breadcrumbs": "^3.0.2",
-    "@gov.au/buttons": "^3.0.4",
-    "@gov.au/callout": "^2.0.8",
-    "@gov.au/control-input": "^2.1.6",
-    "@gov.au/core": "^3.1.0",
-    "@gov.au/cta-link": "^2.1.4",
-    "@gov.au/direction-links": "^2.1.4",
-    "@gov.au/footer": "^3.0.1",
-    "@gov.au/grid-12": "^2.0.8",
-    "@gov.au/header": "^4.1.6",
-    "@gov.au/headings": "^2.0.8",
-    "@gov.au/inpage-nav": "^3.0.3",
-    "@gov.au/keyword-list": "^3.0.2",
-    "@gov.au/link-list": "^3.0.3",
-    "@gov.au/main-nav": "^0.1.4",
-    "@gov.au/page-alerts": "^2.0.8",
-    "@gov.au/pancake": "^1.2.4",
-    "@gov.au/progress-indicator": "^3.1.4",
-    "@gov.au/responsive-media": "^2.0.11",
-    "@gov.au/select": "^2.0.8",
-    "@gov.au/side-nav": "^3.0.0",
-    "@gov.au/skip-link": "^2.0.10",
-    "@gov.au/tags": "^3.1.4",
-    "@gov.au/text-inputs": "^2.0.9",
-    "express": "^4.16.4",
-    "helmet": "^3.15.0",
-    "node-sass": "^4.10.0",
-    "urldecode": "^1.0.1"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.6",
-    "supertest": "^3.3.0"
-  },
+	"name": "chameleon",
+	"version": "0.1.0",
+	"description": "Interactive colour template previews for the Design System.",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js localhost 3000",
+		"test": "NODE_ENV=test mocha test/integration/*.js --timeout 10000 --exit"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/govau/chameleon.git"
+	},
+	"engines": {
+		"node": "~10",
+		"npm": "~6"
+	},
+	"keywords": [
+		"interactive",
+		"form",
+		"color",
+		"template",
+		"preview",
+		"design",
+		"system"
+	],
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/govau/chameleon/issues"
+	},
+	"homepage": "https://github.com/govau/chameleon#readme",
+	"dependencies": {
+		"@gov.au/accordion": "latest",
+		"@gov.au/animate": "latest",
+		"@gov.au/body": "latest",
+		"@gov.au/breadcrumbs": "latest",
+		"@gov.au/buttons": "latest",
+		"@gov.au/callout": "latest",
+		"@gov.au/control-input": "latest",
+		"@gov.au/core": "latest",
+		"@gov.au/cta-link": "latest",
+		"@gov.au/direction-links": "latest",
+		"@gov.au/footer": "latest",
+		"@gov.au/grid-12": "latest",
+		"@gov.au/header": "latest",
+		"@gov.au/headings": "latest",
+		"@gov.au/inpage-nav": "latest",
+		"@gov.au/keyword-list": "latest",
+		"@gov.au/link-list": "latest",
+		"@gov.au/main-nav": "latest",
+		"@gov.au/page-alerts": "latest",
+		"@gov.au/pancake": "latest",
+		"@gov.au/progress-indicator": "latest",
+		"@gov.au/responsive-media": "latest",
+		"@gov.au/select": "latest",
+		"@gov.au/side-nav": "latest",
+		"@gov.au/skip-link": "latest",
+		"@gov.au/tags": "latest",
+		"@gov.au/text-inputs": "latest",
+		"express": "^4.16.4",
+		"helmet": "^3.15.0",
+		"node-sass": "^4.10.0",
+		"urldecode": "^1.0.1"
+	},
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"mocha": "^5.2.0",
+		"nodemon": "^1.18.6",
+		"supertest": "^3.3.0"
+	},
 	"pancake": {
 		"auto-save": true,
 		"plugins": true,

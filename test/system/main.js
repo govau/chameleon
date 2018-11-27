@@ -12,7 +12,7 @@ function ParseParameters( paramString = window.location.search ) {
 			paramObject[ keyValue[ 0 ] ] = decodeURIComponent( keyValue[ 1 ] ).split( '+' ).join( '' );
 		});
 	}
-    
+
 	return paramObject;
 }
 

@@ -8,7 +8,7 @@ const urldecode = require( 'urldecode' )
 const app = express();
 
 const port = process.env.PORT || 3000;
-const uikitSass = fs.readFileSync( '../templates/pancake.scss', 'utf-8' );
+const uikitSass = fs.readFileSync( path.join( __dirname, '/../templates/pancake.scss' ), 'utf-8' ) ;
 
 app.use( helmet() );
 
@@ -40,7 +40,7 @@ app.get( '/frame',  async ( request, response ) => {
 	let customStyles = '';
 
 	Object.keys( colors ).map( ( colorType ) => {
-		const colorValue = colors[ colorType ];
+		const colorValue = colors[ urldecode( colorType ) ];
 
 		if( colorValue ) {
 			customStyles += `${ colorMap[ colorType ] }: ${ colors[ colorType ] };\n`;
@@ -62,6 +62,6 @@ app.get( '/frame',  async ( request, response ) => {
 	response.send( html );
 });
 
-app.listen( port, () => console.log( `Listening on http://localhost:${ port } ...` ) );
+app.listen( port );
 
 module.exports = app;
