@@ -2,6 +2,7 @@ const server = require("../../src/index");
 const chai = require("chai");
 const request = require("supertest");
 const fs = require("fs");
+const path = require("path");
 
 const expect = chai.expect;
 
@@ -15,26 +16,6 @@ describe( "Server", () => {
 					done();
 				});
 		})
-	})
-
-	describe( "GET /main.js", () => {
-		it( "Should return a 200", ( done ) => {
-			request( server )
-				.get("/main.js")
-				.end( ( error, response ) => {
-					expect( response.status ).to.equal( 200 );
-					done();
-				});
-		})
-
-		it( "Should return a javascript file", ( done ) => {
-			request( server )
-				.get("/main.js")
-				.end( ( error, response ) => {
-					expect( response.type ).to.equal( "application/javascript" );
-					done();
-				});
-		});
 	})
 
 	describe( "GET /frame", () => {
@@ -55,57 +36,106 @@ describe( "Server", () => {
 					done();
 				});
 		});
+	});
 
-		it( "Should return a 200 with text colour red", ( done ) => {
+	describe( "GET /frame?text=red", () => {
+		it( "Should return a 200", ( done ) => {
 			request( server )
 				.get("/frame?text=red")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
-					/**
-					 * @todo CHECK COLOUR IS RED ??
-					 */
 					done();
 				});
 		});
 
-		it( "Should return a 200 with full empty query string", ( done ) => {
+		it( "Should return a html file", ( done ) => {
+			request( server )
+				.get("/frame")
+				.end( ( error, response ) => {
+					expect( response.type ).to.equal( "text/html" );
+					done();
+				});
+		});
+
+		it( "Should assert page response style is correct", ( done ) => {
+			request( server )
+				.get("/frame?text=red")
+				.end( ( error, response ) => {
+					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red.html" ), "utf-8" );
+					expect( response.text ).to.equal( html );
+					done();
+				});
+		});
+	});
+
+	describe( "GET /frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=", () => {
+		it( "Should return a 200", ( done ) => {
 			request( server )
 				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
-					/**
-					 * @todo CHECK COLOUR IS RED ??
-					 */
 					done();
 				});
 		});
 
-		it( "Should return a 200 with full query string", ( done ) => {
+		it( "Should return a html file", ( done ) => {
+			request( server )
+				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
+				.end( ( error, response ) => {
+					expect( response.type ).to.equal( "text/html" );
+					done();
+				});
+		});
+
+		it( "Should assert page response style is correct", ( done ) => {
+			request( server )
+				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
+				.end( ( error, response ) => {
+					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=.html" ), "utf-8" );
+					expect( response.text ).to.equal( html );
+					done();
+				});
+		});
+	});
+
+	describe( "GET /frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red", () => {
+		it( "Should return a 200", ( done ) => {
 			request( server )
 				.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
-					/**
-					 * @todo CHECK COLOUR IS RED ??
-					 */
 					done();
 				});
 		});
 
-		it( "Should return a 200 from malformed querystring to /frame", ( done ) => {
+		it( "Should return a html file", ( done ) => {
 			request( server )
-				.get("/frame?texABCD")
+				.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
 				.end( ( error, response ) => {
-					expect( response.status ).to.equal( 200 );
+					expect( response.type ).to.equal( "text/html" );
 					done();
 				});
 		});
-	})
 
-	describe( "GET /templates/index.html", () => {
+		/**
+		 * @todo This fixture seems too large to be easily read, we'll need to buffer it
+		 * @see https://stackoverflow.com/questions/25783161/asserting-files-that-have-the-same-content
+		 */
+		// it( "Should assert page response style is correct", ( done ) => {
+		// 	request( server )
+		// 		.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
+		// 		.end( ( error, response ) => {
+		// 			let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red.html" ), "utf-8" );
+		// 			expect( response.text ).to.equal( html );
+		// 			done();
+		// 		});
+		// });
+	});
+
+	describe( "GET /templates/full-page/index.html", () => {
 		it( "Should return a 200", ( done ) => {
 			request( server )
-				.get("/templates/index.html")
+				.get("/templates/full-page/index.html")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
 					done();
@@ -114,7 +144,7 @@ describe( "Server", () => {
 
 		it( "Should return a html file", ( done ) => {
 			request( server )
-				.get("/templates/index.html")
+				.get("/templates/full-page/index.html")
 				.end( ( error, response ) => {
 					expect( response.type ).to.equal( "text/html" );
 					done();
