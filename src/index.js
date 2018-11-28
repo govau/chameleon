@@ -27,6 +27,8 @@ app.use( '/templates/full-page', express.static( path.join( __dirname, '/../temp
 app.get( '/frame',  async ( request, response ) => {
 	const colors = request.query;
 
+	console.log(colors);
+
 	const colorMap = {
 		text:           '$AU-color-foreground-text',
 		action:         '$AU-color-foreground-action',
@@ -43,10 +45,19 @@ app.get( '/frame',  async ( request, response ) => {
 	Object.keys( colors ).map( ( colorType ) => {
 		const colorValue = colors[ urldecode( colorType ) ];
 
-		if( colorValue ) {
+		// Not empty value and isn't a color ?
+		if( colorValue !== '' && !isColor( colorValue ) ) {
+			response.send(`<h1>THAT'S NOT A COLOUR! ${colorValue}</h1>`);
+			response.status(500)
+			response.end();
+		}
+		// Not undefined but probably empty ? What am i even doing at this point
+		else if ( colorValue ) {
 			customStyles += `${ colorMap[ colorType ] }: ${ colors[ colorType ] };\n`;
 		}
 	});
+	
+	console.log(customStyles);
 
 	const css = sass.renderSync({
 		data:         customStyles + uikitSass,
