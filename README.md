@@ -6,7 +6,6 @@ Interactive colour template previews for the Design System.
 ## Prerequisites: 
 - [Node.js](https://nodejs.org/en/download/) 10 or higher prefereably the LTS release, which at the time of writing is `v10.13.0`
 
-
 ## Installation:
 ```node
 npm i
@@ -19,12 +18,12 @@ npm test
 
 ## Running locally:
 ```node
-npm start
+npm run dev
 ```
 
 # Contributors:
 <div style="display:inline;">
   <img width="64" height="64" href="https://github.com/adamzerella" src="https://avatars0.githubusercontent.com/u/1501560?s=460&v=4" alt="Adam A. Zerella"/>
-    <img width="64" height="64" href="https://github.com/alex-page" src="https://avatars0.githubusercontent.com/u/19199063?s=460&v=4" alt="Alex Page"/>
+  <img width="64" height="64" href="https://github.com/alex-page" src="https://avatars0.githubusercontent.com/u/19199063?s=460&v=4" alt="Alex Page"/>
 </div>
 
