@@ -3,6 +3,7 @@ const chai = require("chai");
 const request = require("supertest");
 const fs = require("fs");
 const path = require("path");
+const md5 = require("md5");
 
 const expect = chai.expect;
 
@@ -62,7 +63,7 @@ describe( "Server", () => {
 				.get("/frame?text=red")
 				.end( ( error, response ) => {
 					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red.html" ), "utf-8" );
-					expect( response.text ).to.equal( html );
+					expect( md5( response.text ) ).to.equal( md5( html ) );
 					done();
 				});
 		});
@@ -92,7 +93,7 @@ describe( "Server", () => {
 				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
 				.end( ( error, response ) => {
 					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=.html" ), "utf-8" );
-					expect( response.text ).to.equal( html );
+					expect( md5( response.text ) ).to.equal( md5( html ) );
 					done();
 				});
 		});
@@ -117,19 +118,15 @@ describe( "Server", () => {
 				});
 		});
 
-		/**
-		 * @todo This fixture seems too large to be easily read, we'll need to buffer it
-		 * @see https://stackoverflow.com/questions/25783161/asserting-files-that-have-the-same-content
-		 */
-		// it( "Should assert page response style is correct", ( done ) => {
-		// 	request( server )
-		// 		.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
-		// 		.end( ( error, response ) => {
-		// 			let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red.html" ), "utf-8" );
-		// 			expect( response.text ).to.equal( html );
-		// 			done();
-		// 		});
-		// });
+		it( "Should assert page response style is correct", ( done ) => {
+			request( server )
+				.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
+				.end( ( error, response ) => {
+					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red.html" ), "utf-8" );
+					expect( md5( response.text ) ).to.equal( md5( html ) );
+					done();
+				});
+			});
 	});
 
 	describe( "GET /templates/full-page/index.html", () => {
