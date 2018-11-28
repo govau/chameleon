@@ -4,6 +4,7 @@ const path = require( 'path' );
 const sass = require( 'node-sass' );
 const fs = require( 'fs' );
 const urldecode = require( 'urldecode' )
+const isColor = require( 'is-color' )
 
 const app = express();
 
