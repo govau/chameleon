@@ -7,7 +7,7 @@ const Sass = require( 'node-sass' );
 const Fs = require( 'fs' );
 
 
-// Global variables
+// Global settings
 const SETTINGS = {
 	path: {
 		server: '/chameleon',
@@ -32,13 +32,15 @@ const SETTINGS = {
 
 
 /**
- * GetStylesFromQuery -
+ * CreateStyles - Create CSS string from the request query
  *
- * @param {*} query
- * @param {*} sassFile
- * @param {*} colorMap
+ * @param   {object} query    - The request.query
+ * @param   {string} sassFile - The path to the sass file
+ * @param   {object} colorMap - Match keys in query to sass variables
+ *
+ * @returns {string}          - The CSS
  */
-const GetStylesFromQuery = (
+const CreateStyles = (
 	query,
 	sassFile = SETTINGS.path.sass,
 	colorMap = SETTINGS.sassVariables,
@@ -70,12 +72,17 @@ const GetStylesFromQuery = (
 }
 
 
+
 /**
+ * GetHTML - Gets the HTML file from the request URL
  *
- * @param {*} url
- * @param {*} templateLocation
+ * @param   {string} url              - The url the user requested
+ * @param   {string} serverLocation   - The location of the server
+ * @param   {string} templateLocation - The template files location
+ *
+ * @returns {string}                  - The HTML file
  */
-const GetTemplateFromURL = (
+const GetHTML = (
 	url,
 	serverLocation = SETTINGS.path.server,
 	templateLocation = SETTINGS.path.templates
@@ -88,20 +95,20 @@ const GetTemplateFromURL = (
 
 
 /**
- * HandleRequest -
+ * HandleRequest - What happens when the user hits the endpoint
  *
- * @param {*} request
- * @param {*} response
+ * @param {object} request  - HTTP request
+ * @param {object} response - HTTP response
  */
 const HandleRequest = async ( request, response ) => {
 	// Get the HTML
-	const template = GetTemplateFromURL( request._parsedUrl.pathname );
+	const template = GetHTML( request._parsedUrl.pathname );
 
 	// Try compile SASS into CSS
 	let styles;
 	let alert;
 	try {
-		styles = GetStylesFromQuery( request.query );
+		styles = CreateStyles( request.query );
 	}
 	catch( error ){
 		alert = `<div class="au-body sass-error">
