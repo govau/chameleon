@@ -1,25 +1,31 @@
-# Chameleon 🦎 
-[![CircleCI](https://circleci.com/gh/govau/chameleon.svg?style=svg)](https://circleci.com/gh/govau/chameleon)
+# Chameleon 🦎  [![CircleCI](https://circleci.com/gh/govau/chameleon.svg?style=svg)](https://circleci.com/gh/govau/chameleon)
 
-Interactive colour template previews for the Design System.
+> Interactive colour template previews for the Design System.
 
-## Prerequisites: 
-- [Node.js](https://nodejs.org/en/download/) 10 or higher prefereably the LTS release, which at the time of writing is `v10.13.0`
 
-## Installation:
+## Install
+
 ```node
-npm i
+npm install
 ```
 
-## Testing:
-```node
-npm test
-```
+Then run `npm start` or `npm watch` to start the server.
 
-## Running locally:
-```node
-npm run dev
-```
+
+## Getting started
+
+Some information.
+
+
+## Contributing
+
+The express server replaces the CSS file when arugments are passed in the URL. If there is an error it replaces the `<!-- ERROR -->` comment.
+
+
+## Release history
+
+- v0.2.0 - 🎉 Initial release
+
 
 # Contributors:
 <div style="display:inline;">
