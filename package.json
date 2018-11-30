@@ -2,10 +2,11 @@
 	"name": "chameleon",
 	"version": "0.2.0",
 	"description": "Interactive colour template previews for the Design System.",
-	"main": "src/index.js",
+	"main": "index.js",
 	"scripts": {
-		"start": "node src/index.js",
-		"dev": "nodemon src/index.js localhost 3000",
+		"start": "npm run build && node index.js",
+		"watch": "npm run build && nodemon index.js",
+		"build": "node-sass templates/sass/main.scss templates/assets/css/main.css --compressed",
 		"test": "NODE_ENV=test mocha test/integration/*.js --timeout 10000 --exit"
 	},
 	"repository": {
@@ -61,13 +62,10 @@
 		"@gov.au/text-inputs": "latest",
 		"express": "^4.16.4",
 		"helmet": "^3.15.0",
-		"is-color": "^1.0.2",
-		"node-sass": "^4.10.0",
-		"urldecode": "^1.0.1"
+		"node-sass": "^4.10.0"
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",
-		"md5": "^2.2.1",
 		"mocha": "^5.2.0",
 		"nodemon": "^1.18.6",
 		"supertest": "^3.3.0"
@@ -89,8 +87,8 @@
 		},
 		"sass": {
 			"modules": false,
-			"location": "templates/",
-			"name": "pancake.scss"
+			"location": "templates/sass/",
+			"name": "_uikit.scss"
 		}
 	}
 }

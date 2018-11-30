@@ -3,7 +3,6 @@ const chai = require("chai");
 const request = require("supertest");
 const fs = require("fs");
 const path = require("path");
-const md5 = require("md5");
 
 const expect = chai.expect;
 

@@ -22,8 +22,10 @@
 		var $html = document.documentElement; if ($html.classList) $html.classList.remove("no-js"), $html.classList.add("js"); else { var className = "no-js"; $html.className = $html.className.replace(new RegExp("(^|\\b)" + className.split(" ").join("|") + "(\\b|$)", "gi"), " "), $html.className += " js" }
 	</script>
 
-	<link rel="icon" href="../assets/favicons/favicon.ico">
-	<link type="text/css" rel="stylesheet" href="../css/main.css">
+	<!-- Styles are replaced by server -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<link rel="icon" href="/assets/favicons/favicon.ico">
+
 
 	<!-- These are shivs to help modern html work in older internet explorer browsers -->
 	<!--[if lt IE 9]>
@@ -55,7 +57,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<a class="au-header__brand" href="#">
-						<img class="au-header__brand-image" alt="Insert alternate text here" src="../assets/img/header-logo-agov.png">
+						<img class="au-header__brand-image" alt="Insert alternate text here" src="/assets/img/header-logo-agov.png">
 						<div class="au-header__text">
 						<h2 class="au-header__heading">Name of product or service</h2>
 						<div class="au-header__subline">Simple explaination of the product or service</div>
@@ -88,9 +90,9 @@
 									Close
 								</button>
 								<ul class="au-link-list">
-									<li><a href="../">Home</a></li>
-									<li class="active"><span>Basic page</span></li>
-									<li><a href="../form">Form page</a></li>
+									<li><a href="/chameleon/">Home</a></li>
+									<li class="active"><a href="#" aria-current="page">Basic page</a></li>
+									<li><a href="/chameleon/form">Form page</a></li>
 									<li><a href="#">Simple terms</a></li>
 									<li><a href="#">Distinct from eachother</a></li>
 								</ul>
@@ -154,7 +156,7 @@
 					<div class="col-sm-8 col-sm-pull-4" id="content">
 						<nav class="au-breadcrumbs" aria-label="breadcrumb">
 							<ul class="au-link-list au-link-list--inline">
-								<li><a href="../">Home</a></li>
+								<li><a href="">Home</a></li>
 								<li><a href="#">Basic page</a></li>
 								<li><a href="#">Page link</a></li>
 								<li>Basic page example</li>
@@ -199,7 +201,7 @@
 	</footer>
 
 	<!-- The javascript from pancake to open and close side nav on desktop -->
-	<script type="text/javascript" src="../js/script.min.js"></script>
+	<script type="text/javascript" src="/assets/js/script.min.js"></script>
 </body>
 
 </html>
