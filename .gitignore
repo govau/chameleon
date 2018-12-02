@@ -1,4 +1,7 @@
 node_modules
 .DS_Store
+
+# Ignore generated files
 templates/sass/_uikit.scss
 templates/assets/css/main.css
+templates/assets/js/script.min.js

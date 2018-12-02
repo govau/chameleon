@@ -75,8 +75,7 @@
 		"plugins": true,
 		"ignore": [
 			"@gov.au/pancake-react",
-			"@gov.au/pancake-json",
-			"@gov.au/pancake-js"
+			"@gov.au/pancake-json"
 		],
 		"css": {
 			"minified": false,
@@ -89,6 +88,12 @@
 			"modules": false,
 			"location": "templates/sass/",
 			"name": "_uikit.scss"
+		},
+		"js": {
+			"minified": true,
+			"modules": false,
+			"location": "templates/assets/js/",
+			"name": "script.min.js"
 		}
 	}
 }
