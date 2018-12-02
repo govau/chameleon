@@ -95,20 +95,22 @@ const GetHTML = (
 
 
 /**
- * HandleRequest - What happens when the user hits the endpoint
+ * GenerateHTML - Create the HTML file
  *
- * @param {object} request  - HTTP request
- * @param {object} response - HTTP response
+ * @param {*} url   - The url of the template file
+ * @param {*} query - Any query paramaters
+ *
+ * @returns         -
  */
-const HandleRequest = async ( request, response ) => {
+const GenerateHTML = ( url, query ) => {
 	// Get the HTML
-	const template = GetHTML( request._parsedUrl.pathname );
+	const template = GetHTML( url );
 
 	// Try compile SASS into CSS
 	let styles;
 	let alert;
 	try {
-		styles = CreateStyles( request.query );
+		styles = CreateStyles( query );
 	}
 	catch( error ){
 		alert = `<div class="au-body sass-error">
@@ -123,8 +125,7 @@ const HandleRequest = async ( request, response ) => {
 		? template.replace( SETTINGS.errorReplace, alert )
 		: template.replace( SETTINGS.styleReplace, styles );
 
-	// Send back the HTML to the user
-	response.send( html );
+	return html;
 };
 
 
@@ -138,7 +139,13 @@ App.use( Helmet() );
 App.use( '/assets', Express.static( SETTINGS.path.assets ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
-App.get( `${ SETTINGS.path.server }*`, HandleRequest );
+App.get( `${ SETTINGS.path.server }*`, ( request, response ) => {
+	// Generate HTML to send back to user
+	const html = GenerateHTML( request._parsedUrl.pathname, request.query );
+
+	// Send back the HTML to the user
+	response.send( html );
+});
 
 // Start the server on the PORT
 App.listen( SETTINGS.PORT, () => {
