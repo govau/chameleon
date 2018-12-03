@@ -31,6 +31,7 @@ jobs:
                   - assets/
                   - package.json
                   - package-lock.json
+                  - index.js
 
 
     deploy-chameleon-dev:
