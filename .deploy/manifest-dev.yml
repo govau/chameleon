@@ -4,6 +4,6 @@ applications:
   buildpack: nodejs_buildpack
   memory: 128M
   instances: 1
-  command: node src/index.js
+  command: node index.js
   env: 
     NODE_ENV: development

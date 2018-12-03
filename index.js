@@ -53,20 +53,22 @@ const CreateStyles = (
 		// Create a SASS string to add above the sass
 		let css = '';
 		let customStyles = '';
-		let errors = '';
+		let errors = [];
 		if( query ){
+
 			Object.keys( query ).forEach( colorType => {
 				const colorValue = ColorString.get( query[ colorType ] );
-				console.log( colorValue );
-				
+
 				if ( colorValue === null ) {
-					console.log( 'invalid error' );
-					errors = errors + `Invalid colour for ${ query[ colorType ] }`;
+					errors.push( `Invalid colour ${ query[ colorType ] } for ${ variables[ colorType ] }` );
+
+					// Not throwing and error as we want to continue parsing the SASS. 
+					// node-sass errors should be caught down the chain
 				}
 				else {
 					customStyles += `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
 				}
-			});
+			}); 
 		}
 
 		customStyles = customStyles + data;
@@ -77,8 +79,6 @@ const CreateStyles = (
 				outputStyle: 'compressed',
 			}) ).css;
 		}
-
-		console.log( errors );
 
 		return { styles: `<style>${ css }</style>`, errors };
 
@@ -105,15 +105,15 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	let template = Fs.readFileSync( templateLocation, 'utf-8' );
 
 	// If the user doesn't provide a query just send the normal html
-	if( !query ){
+	if( Object.keys(query).length === 0 ){
 		return template;
 	}
 
 	// Try compile SASS into CSS
-	let errorMessages = '';
+	let errorMessages = [];
 	try {
 		const { styles, errors } = CreateStyles( query, data, variables );
-		errorMessages += errors;
+		errorMessages.push(...errors);
 
 		// If there are styles add them to the template
 		if( styles ) {
@@ -121,11 +121,15 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 		}
 	}
 	catch( error ) {
-		errorMessages += error.message;
+		errorMessages.push(error.message);
 	}
 
+	errorMessages = errorMessages.map( message => `<li>${ message }</li>` ).join( '' );
+
 	// Page alert HTML for invalid colours
-	const alert = `<div class="sass-error au-body au-page-alerts au-page-alerts--error">${ errorMessages }</div>`;
+	const alert = errorMessages
+		? `<div class="sass-error au-body au-page-alerts au-page-alerts--error"><h1 class="au-display-md">Error</h1><ul>${ errorMessages }</ul></div>`
+		: '';
 
 	// Add any errors
 	const html = template.replace( SETTINGS.replace.errors, alert );
@@ -133,8 +137,6 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Send HTML back
 	return html;
 };
-
-
 // We are using express for our server
 const App = Express();
 
@@ -147,7 +149,7 @@ App.use( '/assets', Express.static( SETTINGS.path.assets ) );
 App.use( '/templates', Express.static( 'templates' ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
-App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
+App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {		
 	// Generate HTML to send back to user
 	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
@@ -161,6 +163,5 @@ App.listen( SETTINGS.PORT, () => {
 });
 
 module.exports = App;
-
 module.exports.GenerateHTML = GenerateHTML;
 module.exports.CreateStyles = CreateStyles;
