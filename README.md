@@ -6,7 +6,7 @@
 ## Install
 
 ```node
-npm install
+npm install 
 ```
 
 Then run `npm start` or `npm watch` to start the server.
