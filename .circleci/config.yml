@@ -17,8 +17,8 @@ jobs:
                 name: Save node_modules to cache
                 key: v2-dependency-cache-{{ checksum "package.json" }}
                 paths:
-                  - node_modules
-                  - templates/pancake.scss
+                  - node_modules/
+                  - templates/
             - run:
                 name: Run all the tests!
                 command: npm test
@@ -27,9 +27,10 @@ jobs:
                 paths:
                   - .deploy/
                   - node_modules/
-                  - src/
                   - templates/
+                  - assets/
                   - package.json
+                  - index.js
 
 
     deploy-chameleon-dev:
@@ -43,7 +44,7 @@ jobs:
                 command: |
                     cd ~/chameleon
                     mv .deploy/manifest-dev.yml .
-                    rm -rf node_modules # Node.js buildpack is stupid, see: https://github.com/cloudfoundry/nodejs-buildpack/issues/75
+                    rm -rf node_modules # Node.js buildpack is stupid see: https://github.com/cloudfoundry/nodejs-buildpack/issues/75
                     cf login -a $CF_API_DEV -o $CF_ORG -s $CF_SPACE -u $CF_USER_DEV -p $CF_PASSWORD_STAGING
                     cf zero-downtime-push chameleon -f manifest-dev.yml
 
@@ -65,7 +66,7 @@ jobs:
 
 workflows:
   version: 2
-  deploy-chameleon:
+  build-and-deploy-chameleon:
     jobs:
       - build-and-test-chameleon
       - deploy-chameleon-dev:
