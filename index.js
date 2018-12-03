@@ -1,21 +1,21 @@
 /**
- * Dependecies
+ * index.js - Chameleon tongues to the sky
  */
+
+// Dependencies
 const Express = require( 'express' );
 const Helmet = require( 'helmet' );
 const Sass = require( 'node-sass' );
 const Fs = require( 'fs' );
 const ColorString = require( 'color-string' );
+const Gradient = require( 'gradient-string' );
+const CFonts = require( 'cfonts' );
+
 
 // Global settings
 const SETTINGS = {
-	endpoint: '/chameleon',
-	path: {
-		assets: 'assets',
-		templates: 'templates',
-	},
 	sass: {
-		data: Fs.readFileSync( 'assets/sass/main.scss', 'utf-8' ),
+		data:      Fs.readFileSync( 'assets/sass/main.scss', 'utf-8' ),
 		variables: {
 			text:           '$AU-color-foreground-text',
 			action:         '$AU-color-foreground-action',
@@ -31,81 +31,97 @@ const SETTINGS = {
 		styles: '<link rel="stylesheet" href="/assets/css/main.css">',
 		errors: '<!-- ERROR -->',
 	},
-	PORT: process.env.PORT || 3000,
+	path: {
+		assets:    'assets',
+		templates: 'templates',
+	},
+	endpoint: '/chameleon',
+	PORT:     process.env.PORT || 3000,
 };
 
 
 /**
  * CreateStyles - Creates a HTML style tag with generated css
  *
- * @param   {object} query    - The request.query
- * @param   {string} sass     - The sass that gets added to the output
- * @param   {object} colorMap - Match keys in query to sass variables
+ * @param   {object} query     - An object containing the queries
+ * @param   {string} data      - The default sass to add the variables to
+ * @param   {object} variables - An object that maps queries to sass variables
  *
- * @returns {string}          - The CSS
+ * @returns {string}           - The <style>...</style> with css in the middle
  */
-const CreateStyles = (
-	query,
-	data,
-	variables
-) => {
+const CreateStyles = ( query, data, variables ) => {
 	try {
 		// Create a SASS string to add above the sass
-		let css = '';
 		let customStyles = '';
-		let errors = [];
-		if( query ){
+		let styles;
+		const errors = [];
 
-			Object.keys( query ).forEach( colorType => {
+		// If the user has a query, map them to variables
+		if( query ) {
+			Object.keys( query ).forEach( ( colorType ) => {
 				const colorValue = ColorString.get( query[ colorType ] );
 
-				if ( colorValue === null ) {
-					errors.push( `Invalid colour ${ query[ colorType ] } for ${ variables[ colorType ] }` );
-
-					// Not throwing and error as we want to continue parsing the SASS. 
-					// node-sass errors should be caught down the chain
+				// If there is a valid colour add it to custom styles
+				if( colorValue ) {
+					customStyles = `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
 				}
+				// If there is not a color value add to the errors
 				else {
-					customStyles += `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
+					errors.push( `Invalid colour ${ query[ colorType ] } for ${ variables[ colorType ] }` );
 				}
-			}); 
+			});
 		}
 
-		customStyles = customStyles + data;
-		
-		if( customStyles !== '' ){
-			css = ( Sass.renderSync({
-				data:         customStyles,
-				outputStyle: 'compressed',
-			}) ).css;
+		// Add any additional styles below the custom styles
+		customStyles += data;
+
+		// If there are custom styles turn them into an inline <style> tag
+		if( customStyles ) {
+			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
+			styles = `<style>${ css }</style>`;
 		}
 
-		return { styles: `<style>${ css }</style>`, errors };
-
+		// Send back the styles and errors
+		return { styles, errors };
 	}
-	catch( error ){
+	catch( error ) {
 		throw new Error( error.message );
 	}
-}
+};
+
+
+/**
+ * RainbowMessage - A chameleon themed start message
+ *
+ * @param {*} string - The string to rainbowify
+ */
+const RainbowMessage = ( string ) => {
+	const { array } = ( CFonts.render( string, { align: 'center' }) );
+	console.log( '\n\n\n' );
+	array.forEach( line => console.log( Gradient.rainbow( line ) ) );
+};
 
 
 /**
  * GenerateHTML - Create the HTML file
  *
- * @param {*} url   - The url of the template file
- * @param {*} query - Any query paramaters
+ * @param   {string} url         - The url the user is on
+ * @param   {object} query       - The query parameters
+ * @param   {string} endpoint    - The API endpoint
+ * @param   {string} templateDir - The location of the template files
+ * @param   {object} sass        - The sass data and variable map
  *
- * @returns         - Customised HTML template given the query
+ * @returns {string}             - The HTML to send back to the user
  */
 const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
 	// Location of the index.html file relative to URL.
-	let templateLocation = url.replace( endpoint, templateDir ) + '/index.html';
+	const templateLocation = `${ url.replace( endpoint, templateDir ) }/index.html`;
 
 	// Get the HTML
 	let template = Fs.readFileSync( templateLocation, 'utf-8' );
 
 	// If the user doesn't provide a query just send the normal html
-	if( Object.keys(query).length === 0 ){
+	if( Object.keys( query ).length === 0 ) {
 		return template;
 	}
 
@@ -113,7 +129,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	let errorMessages = [];
 	try {
 		const { styles, errors } = CreateStyles( query, data, variables );
-		errorMessages.push(...errors);
+		errorMessages.push( ...errors );
 
 		// If there are styles add them to the template
 		if( styles ) {
@@ -121,14 +137,17 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 		}
 	}
 	catch( error ) {
-		errorMessages.push(error.message);
+		errorMessages.push( error.message );
 	}
 
 	errorMessages = errorMessages.map( message => `<li>${ message }</li>` ).join( '' );
 
 	// Page alert HTML for invalid colours
 	const alert = errorMessages
-		? `<div class="sass-error au-body au-page-alerts au-page-alerts--error"><h1 class="au-display-md">Error</h1><ul>${ errorMessages }</ul></div>`
+		? 	`<div class="sass-error au-body au-page-alerts au-page-alerts--error">
+					<h1 class="au-display-md">Error</h1>
+					<ul>${ errorMessages }</ul>
+				</div>`
 		: '';
 
 	// Add any errors
@@ -149,7 +168,7 @@ App.use( '/assets', Express.static( SETTINGS.path.assets ) );
 App.use( '/templates', Express.static( 'templates' ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
-App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {		
+App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 	// Generate HTML to send back to user
 	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
@@ -159,7 +178,14 @@ App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 
 // Start the server on the PORT
 App.listen( SETTINGS.PORT, () => {
-	console.log( `Listening at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint }` );
+	RainbowMessage( 'Chameleon' );
+	CFonts.say(
+		`Started at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint }`,
+		{
+			align: 'center',
+			font:  'console',
+		},
+	);
 });
 
 module.exports = App;
