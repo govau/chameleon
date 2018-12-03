@@ -30,7 +30,6 @@ jobs:
                   - templates/
                   - assets/
                   - package.json
-                  - package-lock.json
                   - index.js
 
 

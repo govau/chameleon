@@ -4,6 +4,6 @@ applications:
   buildpack: nodejs_buildpack
   memory: 128M
   instances: 2
-  command: node index.js
+  command: node ./node_modules/.bin/pancake && npm run build && node index.js
   env: 
     NODE_ENV: production
