@@ -7,9 +7,8 @@
 		"start": "npm run build && node index.js",
 		"watch": "npm run build && nodemon index.js",
 		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed",
-		"test:integration": "mocha test/integration/*.js --timeout 10000 --exit",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
-		"test": "npm run test:integration || npm run test:unit"
+		"test": "npm run test:unit"
 	},
 	"repository": {
 		"type": "git",
@@ -69,10 +68,8 @@
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",
-		"md5": "^2.2.1",
 		"mocha": "^5.2.0",
-		"nodemon": "^1.18.6",
-		"supertest": "^3.3.0"
+		"nodemon": "^1.18.6"
 	},
 	"pancake": {
 		"auto-save": true,
