@@ -5,93 +5,88 @@ const Express = require( 'express' );
 const Helmet = require( 'helmet' );
 const Sass = require( 'node-sass' );
 const Fs = require( 'fs' );
-
+const ColorString = require( 'color-string' );
 
 // Global settings
 const SETTINGS = {
+	endpoint: '/chameleon',
 	path: {
-		server: '/chameleon',
-		assets: 'templates/assets',
+		assets: 'assets',
 		templates: 'templates',
-		sass: 'templates/sass/main.scss',
 	},
-	sassVariables: {
-		text:           '$AU-color-foreground-text',
-		action:         '$AU-color-foreground-action',
-		focus:          '$AU-color-foreground-focus',
-		background:     '$AU-color-background',
-		textDark:       '$AU-colordark-foreground-text',
-		actionDark:     '$AU-colordark-foreground-action',
-		focusDark:      '$AU-colordark-foreground-focus',
-		backgroundDark: '$AU-colordark-background',
+	sass: {
+		data: Fs.readFileSync( 'assets/sass/main.scss', 'utf-8' ),
+		variables: {
+			text:           '$AU-color-foreground-text',
+			action:         '$AU-color-foreground-action',
+			focus:          '$AU-color-foreground-focus',
+			background:     '$AU-color-background',
+			textDark:       '$AU-colordark-foreground-text',
+			actionDark:     '$AU-colordark-foreground-action',
+			focusDark:      '$AU-colordark-foreground-focus',
+			backgroundDark: '$AU-colordark-background',
+		},
 	},
-	styleReplace: '<link rel="stylesheet" href="/assets/css/main.css">',
-	errorReplace: '<!-- ERROR -->',
+	replace: {
+		styles: '<link rel="stylesheet" href="/assets/css/main.css">',
+		errors: '<!-- ERROR -->',
+	},
 	PORT: process.env.PORT || 3000,
 };
 
 
 /**
- * CreateStyles - Create CSS string from the request query
+ * CreateStyles - Creates a HTML style tag with generated css
  *
  * @param   {object} query    - The request.query
- * @param   {string} sassFile - The path to the sass file
+ * @param   {string} sass     - The sass that gets added to the output
  * @param   {object} colorMap - Match keys in query to sass variables
  *
  * @returns {string}          - The CSS
  */
 const CreateStyles = (
 	query,
-	sassFile = SETTINGS.path.sass,
-	colorMap = SETTINGS.sassVariables,
+	data,
+	variables
 ) => {
 	try {
-		// Read the sass file
-		const sass = Fs.readFileSync( sassFile, 'utf-8' );
-
 		// Create a SASS string to add above the sass
+		let css = '';
 		let customStyles = '';
-		Object.keys( query ).forEach( colorType => {
-			const colorValue = query[ colorType ];
+		let errors = '';
+		if( query ){
+			Object.keys( query ).forEach( colorType => {
+				const colorValue = ColorString.get( query[ colorType ] );
+				console.log( colorValue );
+				
+				if ( colorValue === null ) {
+					console.log( 'invalid error' );
+					errors = errors + `Invalid colour for ${ query[ colorType ] }`;
+				}
+				else {
+					customStyles += `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
+				}
+			});
+		}
 
-			if( colorValue ) {
-				customStyles += `${ colorMap[ colorType ] }: ${ query[ colorType ] };\n`;
-			}
-		});
+		customStyles = customStyles + data;
+		
+		if( customStyles !== '' ){
+			css = ( Sass.renderSync({
+				data:         customStyles,
+				outputStyle: 'compressed',
+			}) ).css;
+		}
 
-		const { css } = Sass.renderSync({
-			data:         customStyles + sass,
-			outputStyle: 'compressed',
-		});
+		console.log( errors );
 
-		return `<style>${ css }</style>`;
+		return { styles: `<style>${ css }</style>`, errors };
+
 	}
 	catch( error ){
-		throw new Error( error );
+		throw new Error( error.message );
 	}
 }
-
-
-
-/**
- * GetHTML - Gets the HTML file from the request URL
- *
- * @param   {string} url              - The url the user requested
- * @param   {string} serverLocation   - The location of the server
- * @param   {string} templateLocation - The template files location
- *
- * @returns {string}                  - The HTML file
- */
-const GetHTML = (
-	url,
-	serverLocation = SETTINGS.path.server,
-	templateLocation = SETTINGS.path.templates
-) => {
-	return Fs.readFileSync(
-		`${ url.replace( serverLocation, templateLocation ) }/index.html`,
-		'utf-8'
-	);
-};
 
 
 /**
@@ -100,31 +95,42 @@ const GetHTML = (
  * @param {*} url   - The url of the template file
  * @param {*} query - Any query paramaters
  *
- * @returns         -
+ * @returns         - Customised HTML template given the query
  */
-const GenerateHTML = ( url, query ) => {
+const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
+	// Location of the index.html file relative to URL.
+	let templateLocation = url.replace( endpoint, templateDir ) + '/index.html';
+
 	// Get the HTML
-	const template = GetHTML( url );
+	let template = Fs.readFileSync( templateLocation, 'utf-8' );
+
+	// If the user doesn't provide a query just send the normal html
+	if( !query ){
+		return template;
+	}
 
 	// Try compile SASS into CSS
-	let styles;
-	let alert;
+	let errorMessages = '';
 	try {
-		styles = CreateStyles( query );
+		const { styles, errors } = CreateStyles( query, data, variables );
+		errorMessages += errors;
+
+		// If there are styles add them to the template
+		if( styles ) {
+			template = template.replace( SETTINGS.replace.styles, styles );
+		}
 	}
-	catch( error ){
-		alert = `<div class="au-body sass-error">
-			<div class="au-page-alerts au-page-alerts--error">
-				${ error.message }
-			</div>
-		</div>`;
+	catch( error ) {
+		errorMessages += error.message;
 	}
 
-	// Add the styles or an error message
-	const html = alert
-		? template.replace( SETTINGS.errorReplace, alert )
-		: template.replace( SETTINGS.styleReplace, styles );
+	// Page alert HTML for invalid colours
+	const alert = `<div class="sass-error au-body au-page-alerts au-page-alerts--error">${ errorMessages }</div>`;
 
+	// Add any errors
+	const html = template.replace( SETTINGS.replace.errors, alert );
+
+	// Send HTML back
 	return html;
 };
 
@@ -138,10 +144,12 @@ App.use( Helmet() );
 // Link static assets like images to the generated HTML
 App.use( '/assets', Express.static( SETTINGS.path.assets ) );
 
+App.use( '/templates', Express.static( 'templates' ) );
+
 // Handle requests to server on route SETTINGS.serverLocation
-App.get( `${ SETTINGS.path.server }*`, ( request, response ) => {
+App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 	// Generate HTML to send back to user
-	const html = GenerateHTML( request._parsedUrl.pathname, request.query );
+	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
 	// Send back the HTML to the user
 	response.send( html );
@@ -149,7 +157,10 @@ App.get( `${ SETTINGS.path.server }*`, ( request, response ) => {
 
 // Start the server on the PORT
 App.listen( SETTINGS.PORT, () => {
-	console.log( `Listening at http://localhost:${ SETTINGS.PORT }` );
+	console.log( `Listening at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint }` );
 });
 
 module.exports = App;
+
+module.exports.GenerateHTML = GenerateHTML;
+module.exports.CreateStyles = CreateStyles;
