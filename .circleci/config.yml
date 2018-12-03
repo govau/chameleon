@@ -44,7 +44,7 @@ jobs:
                 command: |
                     cd ~/chameleon
                     mv .deploy/manifest-dev.yml .
-                    rm -rf node_modules # Node.js buildpack is 💩 see: https://github.com/cloudfoundry/nodejs-buildpack/issues/75
+                    rm -rf node_modules # Node.js buildpack is stupid see: https://github.com/cloudfoundry/nodejs-buildpack/issues/75
                     cf login -a $CF_API_DEV -o $CF_ORG -s $CF_SPACE -u $CF_USER_DEV -p $CF_PASSWORD_STAGING
                     cf zero-downtime-push chameleon -f manifest-dev.yml
 
@@ -60,13 +60,13 @@ jobs:
                 command: |
                     cd ~/chameleon
                     mv .deploy/manifest-prod.yml .
-                    rm -rf node_modules # Node.js buildpack is 💩, see: https://github.com/cloudfoundry/nodejs-buildpack/issues/75
+                    rm -rf node_modules # Node.js buildpack is stupid, see: https://github.com/cloudfoundry/nodejs-buildpack/issues/75
                     cf login -a $CF_API_PROD -o $CF_ORG -s $CF_SPACE -u $CF_USER_PROD -p $CF_PASSWORD_PROD
                     cf zero-downtime-push chameleon -f manifest-prod.yml
 
 workflows:
   version: 2
-  deploy-chameleon:
+  build-and-deploy-chameleon:
     jobs:
       - build-and-test-chameleon
       - deploy-chameleon-dev:
