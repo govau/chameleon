@@ -1,15 +1,16 @@
-const server = require("../../src/index");
-const chai = require("chai");
-const request = require("supertest");
-const fs = require("fs");
-const path = require("path");
+const Server = require("../../index");
+const Chai = require("chai");
+const Request = require("supertest");
+const Fs = require("fs");
+const Path = require("path");
+const Md5 = require("md5");
 
-const expect = chai.expect;
+const expect = Chai.expect;
 
 describe( "Server", () => {
 	describe( "GET /", () => {
 		it( "Should return a 404", ( done ) => {
-			request( server )
+			Request( Server )
 				.get("/")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 404 );
@@ -18,10 +19,10 @@ describe( "Server", () => {
 		})
 	})
 
-	describe( "GET /frame", () => {
+	describe( "GET /chameleon", () => {
 		it( "Should return a 200", ( done ) => {
-			request( server )
-				.get("/frame")
+			Request( Server )
+				.get("/chameleon")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
 					done();
@@ -29,8 +30,8 @@ describe( "Server", () => {
 		});
 
 		it( "Should return a html file", ( done ) => {
-			request( server )
-				.get("/frame")
+			Request( Server )
+				.get("/chameleon")
 				.end( ( error, response ) => {
 					expect( response.type ).to.equal( "text/html" );
 					done();
@@ -38,10 +39,10 @@ describe( "Server", () => {
 		});
 	});
 
-	describe( "GET /frame?text=red", () => {
+	describe( "GET /chameleon?text=red", () => {
 		it( "Should return a 200", ( done ) => {
-			request( server )
-				.get("/frame?text=red")
+			Request( Server )
+				.get("/chameleon?text=red")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
 					done();
@@ -49,8 +50,8 @@ describe( "Server", () => {
 		});
 
 		it( "Should return a html file", ( done ) => {
-			request( server )
-				.get("/frame")
+			Request( Server )
+				.get("/chameleon")
 				.end( ( error, response ) => {
 					expect( response.type ).to.equal( "text/html" );
 					done();
@@ -58,20 +59,20 @@ describe( "Server", () => {
 		});
 
 		it( "Should assert page response style is correct", ( done ) => {
-			request( server )
-				.get("/frame?text=red")
+			Request( Server )
+				.get("/chameleon?text=red")
 				.end( ( error, response ) => {
-					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red.html" ), "utf-8" );
-					expect( md5( response.text ) ).to.equal( md5( html ) );
+					let html = Fs.readFileSync( Path.join(__dirname, "/fixtures/text=red.html" ), "utf-8" );
+					expect( Md5( response.text ) ).to.equal( Md5( html ) );
 					done();
 				});
 		});
 	});
 
-	describe( "GET /frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=", () => {
+	describe( "GET /chameleon?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=", () => {
 		it( "Should return a 200", ( done ) => {
-			request( server )
-				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
+			Request( Server )
+				.get("/chameleon?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
 					done();
@@ -79,8 +80,8 @@ describe( "Server", () => {
 		});
 
 		it( "Should return a html file", ( done ) => {
-			request( server )
-				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
+			Request( Server )
+				.get("/chameleon?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
 				.end( ( error, response ) => {
 					expect( response.type ).to.equal( "text/html" );
 					done();
@@ -88,20 +89,20 @@ describe( "Server", () => {
 		});
 
 		it( "Should assert page response style is correct", ( done ) => {
-			request( server )
-				.get("/frame?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
+			Request( Server )
+				.get("/chameleon?text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=")
 				.end( ( error, response ) => {
-					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=.html" ), "utf-8" );
-					expect( md5( response.text ) ).to.equal( md5( html ) );
+					let html = Fs.readFileSync( Path.join(__dirname, "/fixtures/text=&action=&focus=&background=&textDark=&actionDark=&focusDark=&backgroundDark=.html" ), "utf-8" );
+					expect( Md5( response.text ) ).to.equal( Md5( html ) );
 					done();
 				});
 		});
 	});
 
-	describe( "GET /frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red", () => {
+	describe( "GET /chameleon?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red", () => {
 		it( "Should return a 200", ( done ) => {
-			request( server )
-				.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
+			Request( Server )
+				.get("/chameleon?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
 					done();
@@ -109,8 +110,8 @@ describe( "Server", () => {
 		});
 
 		it( "Should return a html file", ( done ) => {
-			request( server )
-				.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
+			Request( Server )
+				.get("/chameleon?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
 				.end( ( error, response ) => {
 					expect( response.type ).to.equal( "text/html" );
 					done();
@@ -118,11 +119,11 @@ describe( "Server", () => {
 		});
 
 		it( "Should assert page response style is correct", ( done ) => {
-			request( server )
-				.get("/frame?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
+			Request( Server )
+				.get("/chameleon?text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red")
 				.end( ( error, response ) => {
-					let html = fs.readFileSync( path.join(__dirname, "/fixtures/text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red.html" ), "utf-8" );
-					expect( md5( response.text ) ).to.equal( md5( html ) );
+					let html = Fs.readFileSync( Path.join(__dirname, "/fixtures/text=red&action=red&focus=red&background=red&textDark=red&actionDark=red&focusDark=red&backgroundDark=red.html" ), "utf-8" );
+					expect( Md5( response.text ) ).to.equal( Md5( html ) );
 					done();
 				});
 			});
@@ -130,7 +131,7 @@ describe( "Server", () => {
 
 	describe( "GET /templates/full-page/index.html", () => {
 		it( "Should return a 200", ( done ) => {
-			request( server )
+			Request( Server )
 				.get("/templates/full-page/index.html")
 				.end( ( error, response ) => {
 					expect( response.status ).to.equal( 200 );
@@ -139,21 +140,10 @@ describe( "Server", () => {
 		})
 
 		it( "Should return a html file", ( done ) => {
-			request( server )
+			Request( Server )
 				.get("/templates/full-page/index.html")
 				.end( ( error, response ) => {
 					expect( response.type ).to.equal( "text/html" );
-					done();
-				});
-		})
-	})
-
-	describe( "GET /test", () => {
-		it( "Should return a 200 if NODE_ENV isn't set to 'production'", ( done ) => {
-			request( server )
-				.get("/test/")
-				.end( ( error, response ) => {
-					expect( response.status ).to.equal( 200 );
 					done();
 				});
 		})
