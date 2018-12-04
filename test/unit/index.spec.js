@@ -67,7 +67,7 @@ Describe( 'CreateStyles()', () => {
 Describe( 'GenerateHTML()', () => {
 	It( 'It should generate a HTML file with custom styles given valid data', ( done ) => {
 		const html = GenerateHTML(
-			'/zerella/basic',
+			'/zerella',
 			{ action: 'red' },
 			'/zerella', 'test/unit/fixtures',
 			{
@@ -77,7 +77,7 @@ Describe( 'GenerateHTML()', () => {
 		);
 
 		const fixture = Fs.readFileSync(
-			'test/unit/fixtures/basic/fixture-background-red.html',
+			'test/unit/fixtures/fixture-background-red.html',
 			'utf-8',
 		);
 
@@ -88,7 +88,7 @@ Describe( 'GenerateHTML()', () => {
 
 	It( 'It should generate a HTML page with an alert when gvien an invalid color', ( done ) => {
 		const html = GenerateHTML(
-			'/zerella/basic',
+			'/zerella',
 			{ action: '#cabbage' },
 			'/zerella',
 			'test/unit/fixtures',
@@ -99,7 +99,7 @@ Describe( 'GenerateHTML()', () => {
 		);
 
 		const fixture = Fs.readFileSync(
-			'test/unit/fixtures/basic/fixture-error.html',
+			'test/unit/fixtures/fixture-error.html',
 			'utf-8',
 		);
 
@@ -108,9 +108,9 @@ Describe( 'GenerateHTML()', () => {
 	});
 
 
-	It( 'It should update styles fo valid colours and add errors to page alerts', ( done ) => {
+	It( 'It should update styles for valid colours and add errors to page alerts', ( done ) => {
 		const html = GenerateHTML(
-			'/zerella/basic',
+			'/zerella',
 			{ action: 'red', text: '#cabbage' },
 			'/zerella',
 			'test/unit/fixtures',
@@ -121,7 +121,32 @@ Describe( 'GenerateHTML()', () => {
 		);
 
 		const fixture = Fs.readFileSync(
-			'test/unit/fixtures/basic/fixture-styles-with-error.html',
+			'test/unit/fixtures/fixture-styles-with-error.html',
+			'utf-8',
+		);
+
+		Expect( html ).to.equal( fixture );
+		done();
+	});
+
+
+	It( 'It should escape charaters', ( done ) => {
+		const html = GenerateHTML(
+			'/zerella',
+			{
+				action: '<script>alert("hello world");</script>',
+				text:   '<p>yo</p>',
+			},
+			'/zerella',
+			'test/unit/fixtures',
+			{
+				data:      'body { background: red; }',
+				variables: { action: '$AU-action', text: '$AU-text' },
+			},
+		);
+
+		const fixture = Fs.readFileSync(
+			'test/unit/fixtures/fixture-xss.html',
 			'utf-8',
 		);
 
@@ -132,7 +157,7 @@ Describe( 'GenerateHTML()', () => {
 
 	It( 'It should return the default template given no query', ( done ) => {
 		const html = GenerateHTML(
-			'/zerella/basic',
+			'/zerella',
 			{},
 			'/zerella',
 			'test/unit/fixtures',
