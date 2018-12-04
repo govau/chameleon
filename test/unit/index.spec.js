@@ -142,4 +142,46 @@ Describe( 'GenerateHTML()', () => {
 		Expect( html ).to.equal( html );
 		done();
 	});
+
+	It( 'It should return an error given a typical unencoded XSS query', ( done ) => {
+		const html = GenerateHTML(
+			'/zerella/basic',
+			{ action: '<script>page.alert("hi");</script>' },
+			'/zerella',
+			'test/unit/fixtures',
+			{
+				data:      'body { background: $AU-action; }',
+				variables: { action: '$AU-action', text: '$AU-text' },
+			},
+		);
+		
+		const fixture = Fs.readFileSync(
+			'test/unit/fixtures/basic/fixture-unencoded-xss.html',
+			'utf-8',
+		);
+
+		Expect( html ).to.equal( fixture );
+		done();
+	});
+
+	It( 'It should return an error given a typical encoded XSS query', ( done ) => {
+		const html = GenerateHTML(
+			'/zerella/basic',
+			{ action: 'action=purple</style>.%20<a%20href="https://evil.com"%20target="_blank">Click%20here%20to%20read%20more</a>' },
+			'/zerella',
+			'test/unit/fixtures',
+			{
+				data:      'body { background: $AU-action; }',
+				variables: { action: '$AU-action', text: '$AU-text' },
+			},
+		);
+
+		const fixture = Fs.readFileSync(
+			'test/unit/fixtures/basic/fixture-encoded-xss.html',
+			'utf-8',
+		);
+
+		Expect( html ).to.equal( fixture );
+		done();
+	});
 });

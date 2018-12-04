@@ -182,6 +182,7 @@ App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 	// Generate HTML to send back to user
 	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
+	// Send back the HTML to the user
 	response.send( html );
 });
 
