@@ -10,6 +10,7 @@ const Fs = require( 'fs' );
 const ColorString = require( 'color-string' );
 const Gradient = require( 'gradient-string' );
 const CFonts = require( 'cfonts' );
+const Escape = require( 'escape-html' );
 
 
 // Global settings
@@ -59,13 +60,14 @@ const CreateStyles = ( query, data, variables ) => {
 		// If the user has a query, map them to variables
 		if( query ) {
 			Object.keys( query ).forEach( ( colorType ) => {
-				const colorValue = ColorString.get( query[ colorType ] );
+				// Check if the color inputted comes out as a valid rgb
+				const color = ColorString.get.rgb( query[ colorType ] );
 
 				// If there is a valid colour add it to custom styles
-				if( colorValue ) {
-					customStyles = `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
+				if( color ) {
+					customStyles += `${ variables[ colorType ] }: rgba( ${ color.toString() } );\n`;
 				}
-				// Add non valid colours to errors
+				// If there is not a color value add to the errors
 				else if( query[ colorType ] !== '' ) {
 					errors.push( `Invalid colour ${ query[ colorType ] } for ${ variables[ colorType ] }` );
 				}
@@ -85,7 +87,7 @@ const CreateStyles = ( query, data, variables ) => {
 		return { styles, errors };
 	}
 	catch( error ) {
-		throw new Error( error.message );
+		throw new Error( Escape( error.message ) );
 	}
 };
 
@@ -140,7 +142,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 		errorMessages.push( error.message );
 	}
 
-	errorMessages = errorMessages.map( message => `<li>${ message }</li>` ).join( '' );
+	errorMessages = errorMessages.map( message => `<li>${ Escape( message ) }</li>` ).join( '' );
 
 	// Page alert HTML for invalid colours
 	const alert = errorMessages
