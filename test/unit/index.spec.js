@@ -154,6 +154,30 @@ Describe( 'GenerateHTML()', () => {
 		done();
 	});
 
+	It( 'It should escape charaters with an advanced XSS query', ( done ) => {
+		const html = GenerateHTML(
+			'/zerella',
+			{
+				action: 'purple</style>.%20<a%20href="https://evil.com"%20target="_blank">Click%20here%20to%20read%20more</a>',
+				text:   '<p>yo</p>',
+			},
+			'/zerella',
+			'test/unit/fixtures',
+			{
+				data:      'body { background: red; }',
+				variables: { action: '$AU-action', text: '$AU-text' },
+			},
+		);
+
+		const fixture = Fs.readFileSync(
+			'test/unit/fixtures/fixture-xss-advanced.html',
+			'utf-8',
+		);
+
+		Expect( html ).to.equal( fixture );
+		done();
+	});
+
 
 	It( 'It should return the default template given no query', ( done ) => {
 		const html = GenerateHTML(
