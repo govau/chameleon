@@ -11,6 +11,8 @@ const ColorString = require( 'color-string' );
 const Gradient = require( 'gradient-string' );
 const CFonts = require( 'cfonts' );
 
+// Depdenecies for XSS protection
+const Validator = require( 'validator' );
 
 // Global settings
 const SETTINGS = {
@@ -39,6 +41,9 @@ const SETTINGS = {
 	PORT:     process.env.PORT || 3000,
 };
 
+// Global white list to sanitise user input, 
+// only allows characters, numbers, % and # for color codes.
+const XSS_WHITELIST = 'a-zA-Z0-9#%'
 
 /**
  * CreateStyles - Creates a HTML style tag with generated css
@@ -57,17 +62,19 @@ const CreateStyles = ( query, data, variables ) => {
 		const errors = [];
 
 		// If the user has a query, map them to variables
+		
 		if( query ) {
 			Object.keys( query ).forEach( ( colorType ) => {
-				const colorValue = ColorString.get( query[ colorType ] );
+				let sanitisedInput = Validator.whitelist( query[colorType], XSS_WHITELIST );
 
+				const colorValue = ColorString.get( sanitisedInput );
 				// If there is a valid colour add it to custom styles
 				if( colorValue ) {
-					customStyles = `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
+					customStyles = `${ variables[ colorType ] }: ${ sanitisedInput };\n`;
 				}
 				// Add non valid colours to errors
-				else if( query[ colorType ] !== '' ) {
-					errors.push( `Invalid colour ${ query[ colorType ] } for ${ variables[ colorType ] }` );
+				else if( sanitisedInput !== '' ) {
+					errors.push( `Invalid colour ${ sanitisedInput } for ${ variables[ colorType ] }` );
 				}
 			});
 		}
@@ -156,6 +163,8 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Send HTML back
 	return html;
 };
+
+
 // We are using express for our server
 const App = Express();
 
@@ -173,7 +182,6 @@ App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 	// Generate HTML to send back to user
 	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
-	// Send back the HTML to the user
 	response.send( html );
 });
 

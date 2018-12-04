@@ -66,7 +66,8 @@
 		"express": "^4.16.4",
 		"gradient-string": "^1.2.0",
 		"helmet": "^3.15.0",
-		"node-sass": "^4.10.0"
+		"node-sass": "^4.10.0",
+		"validator": "^10.9.0"
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",
