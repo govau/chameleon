@@ -87,7 +87,7 @@ const CreateStyles = ( query, data, variables ) => {
 		return { styles, errors };
 	}
 	catch( error ) {
-		throw new Error( Escape( error.message ) );
+		throw new Error( error.message );
 	}
 };
 
