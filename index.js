@@ -65,8 +65,8 @@ const CreateStyles = ( query, data, variables ) => {
 				if( colorValue ) {
 					customStyles = `${ variables[ colorType ] }: ${ query[ colorType ] };\n`;
 				}
-				// If there is not a color value add to the errors
-				else {
+				// Add non valid colours to errors
+				else if( query[ colorType ] !== '' ) {
 					errors.push( `Invalid colour ${ query[ colorType ] } for ${ variables[ colorType ] }` );
 				}
 			});
@@ -165,6 +165,7 @@ App.use( Helmet() );
 // Link static assets like images to the generated HTML
 App.use( '/assets', Express.static( SETTINGS.path.assets ) );
 
+// Create a static path for the template files
 App.use( '/templates', Express.static( 'templates' ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
