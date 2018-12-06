@@ -116,8 +116,11 @@ const RainbowMessage = ( string ) => {
  * @returns {string}             - The HTML to send back to the user
  */
 const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
+	// Change endpoint to template location, remove any ../
+	const cleanURL = url.replace( endpoint, templateDir ).replace( '../', '' );
+
 	// Location of the index.html file relative to URL.
-	const templateLocation = `${ url.replace( endpoint, templateDir ) }/index.html`;
+	const templateLocation = `${ cleanURL }/index.html`;
 
 	// Get the HTML
 	let template = Fs.readFileSync( templateLocation, 'utf-8' );
