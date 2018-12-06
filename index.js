@@ -171,10 +171,7 @@ App.use( '/assets', Express.static( SETTINGS.path.assets ) );
 App.use( '/templates', Express.static( 'templates' ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
-App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
-	// Removed XSS sameorigin policy for local testing
-	process.env.NODE_ENV === 'production' ? '' : response.removeHeader( 'X-Frame-Options' );
-	
+App.get( `${ SETTINGS.endpoint }/*`, ( request, response ) => {
 	// Generate HTML to send back to user
 	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
