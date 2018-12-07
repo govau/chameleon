@@ -61,6 +61,7 @@
 		"@gov.au/skip-link": "latest",
 		"@gov.au/tags": "latest",
 		"@gov.au/text-inputs": "latest",
+		"autoprefixer": "^9.4.2",
 		"cfonts": "^2.3.0",
 		"color-string": "^1.5.3",
 		"escape-html": "^1.0.3",
