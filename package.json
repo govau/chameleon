@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "npm run build && node index.js",
 		"watch": "npm run build && nodemon index.js",
-		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed && postcss assets/css/main.css -u autoprefixer -r",
+		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed && build:autoprefix",
+		"build:autoprefix": "postcss assets/css/main.css -u autoprefixer -r",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"
 	},
@@ -104,5 +105,11 @@
 			"location": "assets/js/",
 			"name": "script.min.js"
 		}
-	}
+	},
+	"browserslist": [
+		"last 2 versions",
+		"ie 8",
+		"ie 9",
+		"ie 10"
+	]
 }
