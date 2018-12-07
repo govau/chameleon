@@ -123,7 +123,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	const templateLocation = `${ cleanURL }/index.html`;
 
 	if( !Fs.existsSync( templateLocation ) ) {
-		throw new Error( `Template not found for ${ url }` );
+		throw new Error( `Template not found for ${ Escape( url ) }` );
 	}
 
 	// Get the HTML
@@ -195,7 +195,7 @@ App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 App.listen( SETTINGS.PORT, () => {
 	RainbowMessage( 'Chameleon' );
 	CFonts.say(
-		`Started at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint }`,
+		`🦎 Started at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint } 🦎`,
 		{
 			align: 'center',
 			font:  'console',
