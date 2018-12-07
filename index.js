@@ -117,10 +117,14 @@ const RainbowMessage = ( string ) => {
  */
 const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
 	// Change endpoint to template location, remove any ../
-	const cleanURL = url.replace( endpoint, templateDir ).replace( '../', '' );
+	const cleanURL = url.replace( /\.\.\//g, '' ).replace( endpoint, templateDir );
 
 	// Location of the index.html file relative to URL.
 	const templateLocation = `${ cleanURL }/index.html`;
+
+	if( !Fs.existsSync( templateLocation ) ) {
+		throw new Error( `Template not found for ${ url }` );
+	}
 
 	// Get the HTML
 	let template = Fs.readFileSync( templateLocation, 'utf-8' );
