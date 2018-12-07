@@ -6,9 +6,13 @@
 	"scripts": {
 		"start": "npm run build && node src/index.js",
 		"watch": "npm run build && nodemon src/index.js",
+<<<<<<< HEAD
 		"build:autoprefix": "postcss assets/css/main.css -u autoprefixer -r",
 		"build:sass": "node-sass assets/sass/main.scss assets/css/main.css --output-style compressed",
 		"build": "npm run build:sass && npm run build:autoprefix",
+=======
+		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed",
+>>>>>>> Inital attempt at implementing slack notifications
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"
 	},
@@ -64,6 +68,7 @@
 		"@gov.au/tags": "latest",
 		"@gov.au/text-inputs": "latest",
 		"autoprefixer": "^9.4.2",
+		"@slack/client": "^4.8.0",
 		"cfonts": "^2.3.0",
 		"color-string": "^1.5.3",
 		"escape-html": "^1.0.3",
