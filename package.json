@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "npm run build && node index.js",
 		"watch": "npm run build && nodemon index.js",
-		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed",
+		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed && postcss assets/css/main.css -u autoprefixer -r",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"
 	},
@@ -68,7 +68,8 @@
 		"express": "^4.16.4",
 		"gradient-string": "^1.2.0",
 		"helmet": "^3.15.0",
-		"node-sass": "^4.10.0"
+		"node-sass": "^4.10.0",
+		"postcss-cli": "^6.0.1"
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",
