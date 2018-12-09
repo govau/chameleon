@@ -11,7 +11,8 @@ const ColorString = require( 'color-string' );
 const Gradient = require( 'gradient-string' );
 const CFonts = require( 'cfonts' );
 const Escape = require( 'escape-html' );
-
+const Autoprefixer = require( 'autoprefixer' );
+const Postcss = require( 'postcss' );
 
 // Global settings
 const SETTINGS = {
@@ -40,6 +41,32 @@ const SETTINGS = {
 	PORT:     process.env.PORT || 3000,
 };
 
+/**
+ * Autoprefix - Automatically adds autoprefixes to a css file
+ *
+ * @param  {string} file - The file to be prefixed
+ *
+ * @return {string}     - Prefixed css as a string
+ */
+const Autoprefix = ( css ) => {
+	return new Promise( ( resolve, reject ) => {
+
+		// Run autoprefixer with uikit helper.js settings
+		Postcss([ Autoprefixer({
+			browsers: ['last 2 versions', 'ie 8', 'ie 9', 'ie 10']
+		}) ])
+			.process( css, { from: undefined } )
+			.then( ( prefixed ) => {
+				prefixed
+					.warnings()
+					.forEach( ( warn ) => console.warn( warn.toString() ) );
+
+				resolve( prefixed.css );
+			})
+			.catch( error => reject( error ) );
+
+	})
+};
 
 /**
  * CreateStyles - Creates a HTML style tag with generated css
@@ -80,6 +107,10 @@ const CreateStyles = ( query, data, variables ) => {
 		// If there are custom styles turn them into an inline <style> tag
 		if( customStyles ) {
 			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
+			
+			// Apply additional prefixes to CSS for cross-browser compatability.
+			Autoprefix( css );
+
 			styles = `<style>${ css }</style>`;
 		}
 
@@ -165,6 +196,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Send HTML back
 	return html;
 };
+
 // We are using express for our server
 const App = Express();
 
