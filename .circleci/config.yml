@@ -18,7 +18,6 @@ jobs:
                 key: v2-dependency-cache-{{ checksum "package.json" }}
                 paths:
                   - node_modules/
-                  - templates/
             - run:
                 name: Run all the tests!
                 command: npm test
