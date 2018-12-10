@@ -7,5 +7,5 @@ applications:
   command: node ./node_modules/.bin/pancake && npm run build && node index.js
   env: 
     NODE_ENV: production
-  routes:
-    - route: designsystem.gov.au/chameleon
+  # routes:
+  #   - route: designsystem.gov.au/chameleon

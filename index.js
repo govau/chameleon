@@ -116,8 +116,15 @@ const RainbowMessage = ( string ) => {
  * @returns {string}             - The HTML to send back to the user
  */
 const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
+	// Change endpoint to template location, remove any ../
+	const cleanURL = url.replace( /\.\.\//g, '' ).replace( endpoint, templateDir );
+
 	// Location of the index.html file relative to URL.
-	const templateLocation = `${ url.replace( endpoint, templateDir ) }/index.html`;
+	const templateLocation = `${ cleanURL }/index.html`;
+
+	if( !Fs.existsSync( templateLocation ) ) {
+		throw new Error( `Template not found for ${ Escape( url ) }` );
+	}
 
 	// Get the HTML
 	let template = Fs.readFileSync( templateLocation, 'utf-8' );
@@ -165,13 +172,18 @@ const App = Express();
 App.use( Helmet() );
 
 // Link static assets like images to the generated HTML
-App.use( '/assets', Express.static( SETTINGS.path.assets ) );
+App.use( '/chameleon/assets', Express.static( SETTINGS.path.assets ) );
 
 // Create a static path for the template files
 App.use( '/templates', Express.static( 'templates' ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
 App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
+	// Removed XSS sameorigin policy for local testing
+	if( process.env.NODE_ENV !== 'production' ) {
+		response.removeHeader( 'X-Frame-Options' );
+	}
+
 	// Generate HTML to send back to user
 	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
@@ -183,7 +195,7 @@ App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 App.listen( SETTINGS.PORT, () => {
 	RainbowMessage( 'Chameleon' );
 	CFonts.say(
-		`Started at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint }`,
+		`🦎 Started at http://localhost:${ SETTINGS.PORT }${ SETTINGS.endpoint } 🦎`,
 		{
 			align: 'center',
 			font:  'console',
