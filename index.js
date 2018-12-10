@@ -172,7 +172,7 @@ const App = Express();
 App.use( Helmet() );
 
 // Link static assets like images to the generated HTML
-App.use( '/assets', Express.static( SETTINGS.path.assets ) );
+App.use( '/chameleon/assets', Express.static( SETTINGS.path.assets ) );
 
 // Create a static path for the template files
 App.use( '/templates', Express.static( 'templates' ) );
