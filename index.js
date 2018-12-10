@@ -165,6 +165,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Send HTML back
 	return html;
 };
+
 // We are using express for our server
 const App = Express();
 
@@ -174,9 +175,12 @@ App.use( Helmet() );
 // Link static assets like images to the generated HTML
 App.use( '/chameleon/assets', Express.static( SETTINGS.path.assets ) );
 
+<<<<<<< HEAD
 // Create a static path for the template files
 App.use( '/chameleon/templates', Express.static( 'templates' ) );
 
+=======
+>>>>>>> Switched templates asset href to correct location
 // Handle requests to server on route SETTINGS.serverLocation
 App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
 	// Removed XSS sameorigin policy for local testing
