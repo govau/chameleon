@@ -12,6 +12,5 @@ const RainbowMessage = ( string ) => {
 	array.forEach( line => console.log( Gradient.rainbow( line ) ) );
 };
 
-
 module.exports.RainbowMessage = RainbowMessage;
 module.exports.CFonts = CFonts;

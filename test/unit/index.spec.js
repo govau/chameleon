@@ -17,7 +17,7 @@ const It = Mocha.it;
 
 // Local dependencies
 const CreateStyles = require( '../../src/style' );
-const GenerateHTML = require( '../../src/frame' );
+const GenerateHTML = require( '../../src/html' );
 
 /**
  * CreateStyles tests
