@@ -41,6 +41,7 @@ const SETTINGS = {
 	PORT:     process.env.PORT || 3000,
 };
 
+
 /**
  * Autoprefix - Automatically adds autoprefixes to a css file
  *
@@ -53,13 +54,13 @@ const Autoprefix = ( css ) => {
 
 		// Run autoprefixer with uikit helper.js settings
 		Postcss([ Autoprefixer({
-			browsers: ['last 2 versions', 'ie 8', 'ie 9', 'ie 10']
+			browsers: [ 'last 2 versions', 'ie 8', 'ie 9', 'ie 10' ]
 		}) ])
 			.process( css, { from: undefined } )
-			.then( ( prefixed ) => {
+			.then( prefixed => {
 				prefixed
 					.warnings()
-					.forEach( ( warn ) => console.warn( warn.toString() ) );
+					.forEach( warningMessage => console.warn( warningMessage.toString() ) );
 
 				resolve( prefixed.css );
 			})
@@ -67,6 +68,7 @@ const Autoprefix = ( css ) => {
 
 	})
 };
+
 
 /**
  * CreateStyles - Creates a HTML style tag with generated css
@@ -238,3 +240,4 @@ App.listen( SETTINGS.PORT, () => {
 module.exports = App;
 module.exports.GenerateHTML = GenerateHTML;
 module.exports.CreateStyles = CreateStyles;
+module.exports.Autoprefix = Autoprefix;

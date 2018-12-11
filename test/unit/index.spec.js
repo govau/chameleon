@@ -6,8 +6,8 @@
 // Dependencies
 const Chai = require( 'chai' );
 const Mocha = require( 'mocha' );
+const Sinon = require( 'sinon' );
 const Fs = require( 'fs' );
-
 
 // Functions from Chai and Mocha
 const Expect = Chai.expect;
@@ -16,7 +16,7 @@ const It = Mocha.it;
 
 
 // Local dependencies
-const { GenerateHTML, CreateStyles } = require( '../../index' );
+const { GenerateHTML, CreateStyles, Autoprefix } = require( '../../index' );
 
 
 /**
@@ -190,5 +190,22 @@ Describe( 'GenerateHTML()', () => {
 
 		Expect( html ).to.equal( html );
 		done();
+	});
+});
+
+
+/**
+ * Autoprefixer test
+ */
+Describe( 'Autoprefixer()', () => {
+	It( 'CSS without prefixes should be prefixed', ( done ) => {
+
+		const prefixedCss = 'body { -webkit-box-shadow: 3px; box-shadow: 3px; }';
+
+		Autoprefix( 'body { box-shadow: 3px; }' ).then( css => {
+			Expect( css ).to.equal( prefixedCss );
+			done();
+		}).catch( error => console.error( error ) )
+
 	});
 });
