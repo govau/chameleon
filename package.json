@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "npm run build && node index.js",
 		"watch": "npm run build && nodemon index.js",
-		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed",
+		"build": "node-sass assets/sass/main.scss assets/css/main.css --output-style compressed",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"
 	},
