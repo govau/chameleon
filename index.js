@@ -111,9 +111,9 @@ const CreateStyles = ( query, data, variables ) => {
 			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
 			
 			// Apply additional prefixes to CSS for cross-browser compatability.
-			Autoprefix( css );
+			const prefixedCSS = Autoprefix( css );
 
-			styles = `<style>${ css }</style>`;
+			styles = `<style>${ prefixedCSS }</style>`;
 		}
 
 		// Send back the styles and errors
