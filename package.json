@@ -2,10 +2,10 @@
 	"name": "chameleon",
 	"version": "0.2.2",
 	"description": "Interactive colour template previews for the Design System.",
-	"main": "index.js",
+	"main": "src/index.js",
 	"scripts": {
-		"start": "npm run build && node index.js",
-		"watch": "npm run build && nodemon index.js",
+		"start": "npm run build && node src/index.js",
+		"watch": "npm run build && nodemon src/index.js",
 		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"
