@@ -6,7 +6,6 @@
 // Dependencies
 const Chai = require( 'chai' );
 const Mocha = require( 'mocha' );
-const Sinon = require( 'sinon' );
 const Fs = require( 'fs' );
 
 // Functions from Chai and Mocha
