@@ -2,14 +2,18 @@
  * index.js - Chameleon tongues to the sky
  */
 
+
 // Dependencies
 const Express = require( 'express' );
 const Helmet = require( 'helmet' );
 const CFonts = require( 'cfonts' );
 
+
+// Local dependencies
 const Settings = require( './settings' );
 const Cli = require( './cli' );
-const Html = require( './html' );
+const GenerateHTML = require( './html' );
+
 
 // We are using express for our server
 const App = Express();
@@ -28,7 +32,12 @@ App.get( `${ Settings.endpoint }*`, ( request, response ) => {
 	}
 
 	// Generate HTML to send back to user
-	const html = Html.GenerateHTML( request._parsedUrl.pathname, request.query, Settings.endpoint, Settings.path.templates );
+	const html = GenerateHTML(
+		request._parsedUrl.pathname,
+		request.query,
+		Settings.endpoint,
+		Settings.path.templates,
+	);
 
 	// Send back the HTML to the user
 	response.send( html );
