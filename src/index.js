@@ -5,6 +5,7 @@
 // Dependencies
 const Express = require( 'express' );
 const Helmet = require( 'helmet' );
+const CFonts = require( 'cfonts' );
 
 const Settings = require( './settings' );
 const Cli = require( './cli' );
@@ -36,7 +37,7 @@ App.get( `${ Settings.endpoint }*`, ( request, response ) => {
 // Start the server on the PORT
 App.listen( Settings.PORT, () => {
 	Cli.RainbowMessage( 'Chameleon' );
-	Cli.CFonts.say(
+	CFonts.say(
 		`🦎 Started at http://localhost:${ Settings.PORT }${ Settings.endpoint } 🦎`,
 		{
 			align: 'center',

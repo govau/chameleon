@@ -13,4 +13,3 @@ const RainbowMessage = ( string ) => {
 };
 
 module.exports.RainbowMessage = RainbowMessage;
-module.exports.CFonts = CFonts;
