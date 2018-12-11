@@ -1,12 +1,12 @@
 {
 	"name": "chameleon",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"description": "Interactive colour template previews for the Design System.",
 	"main": "index.js",
 	"scripts": {
 		"start": "npm run build && node index.js",
 		"watch": "npm run build && nodemon index.js",
-		"build": "node-sass assets/sass/main.scss assets/css/main.css --compressed && build:autoprefix",
+    "build": "node-sass assets/sass/main.scss assets/css/main.css --output-style compressed && build:autoprefix",
 		"build:autoprefix": "postcss assets/css/main.css -u autoprefixer -r",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"

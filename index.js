@@ -30,7 +30,7 @@ const SETTINGS = {
 		},
 	},
 	replace: {
-		styles: '<link rel="stylesheet" href="/assets/css/main.css">',
+		styles: '<link rel="stylesheet" href="/chameleon/assets/css/main.css">',
 		errors: '<!-- ERROR -->',
 	},
 	path: {
@@ -206,10 +206,7 @@ const App = Express();
 App.use( Helmet() );
 
 // Link static assets like images to the generated HTML
-App.use( '/assets', Express.static( SETTINGS.path.assets ) );
-
-// Create a static path for the template files
-App.use( '/templates', Express.static( 'templates' ) );
+App.use( '/chameleon/assets', Express.static( SETTINGS.path.assets ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
 App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {

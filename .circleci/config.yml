@@ -9,16 +9,15 @@ jobs:
             - restore_cache:
                 name: Restore node_modules from cache
                 keys:
-                  - v2-dependency-cache-{{ checksum "package.json" }}
+                  - v3-dependency-cache-{{ checksum "package.json" }}
             - run:
                 name: Install Node.js dependencies
                 command: npm i
             - save_cache:
                 name: Save node_modules to cache
-                key: v2-dependency-cache-{{ checksum "package.json" }}
+                key: v3-dependency-cache-{{ checksum "package.json" }}
                 paths:
                   - node_modules/
-                  - templates/
             - run:
                 name: Run all the tests!
                 command: npm test
