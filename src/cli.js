@@ -1,5 +1,9 @@
+/**
+ * cli.js - Helper functions for output to CLI
+ */
 const Gradient = require( 'gradient-string' );
 const CFonts = require( 'cfonts' );
+
 
 /**
  * RainbowMessage - A chameleon themed start message
@@ -11,5 +15,6 @@ const RainbowMessage = ( string ) => {
 	console.log( '\n\n\n' );
 	array.forEach( line => console.log( Gradient.rainbow( line ) ) );
 };
+
 
 module.exports.RainbowMessage = RainbowMessage;

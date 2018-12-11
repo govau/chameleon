@@ -1,5 +1,12 @@
+/**
+ * style.js - Generation of <style> tags and errors
+ */
+
+
+// Dependencies
 const Sass = require( 'node-sass' );
 const ColorString = require( 'color-string' );
+
 
 /**
  * CreateStyles - Creates a HTML style tag with generated css
@@ -50,5 +57,6 @@ const CreateStyles = ( query, data, variables ) => {
 		throw new Error( error.message );
 	}
 };
+
 
 module.exports = CreateStyles;
