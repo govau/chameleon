@@ -25,14 +25,14 @@ App.use( Helmet() );
 App.use( '/chameleon/assets', Express.static( Settings.path.assets ) );
 
 // Handle requests to server on route Settings.serverLocation
-App.get( `${ Settings.endpoint }*`, ( request, response ) => {
+App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	// Removed XSS sameorigin policy for local testing
 	if( process.env.NODE_ENV !== 'production' ) {
 		response.removeHeader( 'X-Frame-Options' );
 	}
 
 	// Generate HTML to send back to user
-	const html = GenerateHTML(
+	const html = await GenerateHTML(
 		request._parsedUrl.pathname,
 		request.query,
 		Settings.endpoint,
