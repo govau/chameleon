@@ -163,6 +163,9 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Add any errors
 	const html = template.replace( SETTINGS.replace.errors, alert );
 
+	// Notify Slack!
+	SendSlackMessage(`test`);
+
 	// Send HTML back
 	return html;
 };
