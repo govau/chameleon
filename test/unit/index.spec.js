@@ -15,8 +15,9 @@ const It = Mocha.it;
 
 
 // Local dependencies
-const { GenerateHTML, CreateStyles, Autoprefix } = require( '../../index' );
-
+const CreateStyles = require( '../../src/style' );
+const GenerateHTML = require( '../../src/html' );
+const Autoprefix = require( '../../src/css' );
 
 /**
  * CreateStyles tests
