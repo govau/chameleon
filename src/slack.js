@@ -74,7 +74,7 @@ const SendMessage = ( data, URL, isPrivateChannel = true ) => {
 };
 
 
-export default SlackMessage = ( messageData ) => {
+module.exports.SlackMessage = ( messageData ) => {
 	const CHANNELS = envVars[ 'user-provided' ]
 		? envVars[ 'user-provided' ][ 0 ].credentials.SLACK_WEBHOOKS
 		: [];
