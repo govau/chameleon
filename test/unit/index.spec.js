@@ -58,6 +58,30 @@ Describe( 'CreateStyles()', () => {
 		Expect( errors[ 0 ] ).to.equal( 'Invalid colour #cabbage for $AU-color-action' );
 		Expect( styles ).to.equal( '<style>body{background-color:red}\n</style>' );
 	});
+
+
+	It( 'When given multiple invalid colors, it should return an array with all the errors.', async () => {
+		const sass = 'body {  background-color: $AU-color-action; }';
+		const { errors } = await CreateStyles(
+			{ action: '#f00', background: '#yoik%', focus: '#yonk%s' },
+			sass,
+			{ action: '$AU-color-action', background: '$AU-color-background', focus: '$AU-color-focus' },
+		);
+
+		Expect( errors.length ).to.equal( 2 );
+	});
+
+
+	It( 'When given multiple valid colors, it should return valid CSS for all of them.', async () => {
+		const sass = 'body {  background-color: $AU-color-action; color: $AU-color-background; } h1 { color: $AU-color-focus; }';
+		const { styles } = await CreateStyles(
+			{ action: '#f00', background: 'green', focus: 'pink' },
+			sass,
+			{ action: '$AU-color-action', background: '$AU-color-background', focus: '$AU-color-focus' },
+		);
+
+		Expect( styles ).to.equal( '<style>body{background-color:red;color:green}h1{color:pink}\n</style>' );
+	});
 });
 
 
