@@ -1,7 +1,14 @@
+/**
+ * style.js - Generation of <style> tags and errors
+ */
+
+
+// Dependencies
 const Sass = require( 'node-sass' );
 const Autoprefixer = require( 'autoprefixer' );
 const Postcss = require( 'postcss' );
 const ColorString = require( 'color-string' );
+
 
 /**
  * CreateStyles - Creates a HTML style tag with generated css
