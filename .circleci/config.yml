@@ -28,8 +28,8 @@ jobs:
                   - node_modules/
                   - templates/
                   - assets/
+                  - src/
                   - package.json
-                  - src/index.js
 
 
     deploy-chameleon-dev:
