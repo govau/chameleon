@@ -4,9 +4,10 @@
 	"description": "Interactive colour template previews for the Design System.",
 	"main": "src/index.js",
 	"scripts": {
-		"start": "npm run build && node src/index.js",
-		"watch": "npm run build && nodemon src/index.js",
-		"build": "node-sass assets/sass/main.scss assets/css/main.css --output-style compressed",
+		"start": "npm run build && node index.js",
+		"watch": "npm run build && nodemon index.js",
+		"build:autoprefix": "postcss assets/css/main.css -u autoprefixer -r",
+		"build": "node-sass assets/sass/main.scss assets/css/main.css --output-style compressed && npm run build:autoprefix",
 		"test:unit": "mocha test/unit/*.js --timeout 10000 --exit",
 		"test": "npm run test:unit"
 	},
@@ -61,21 +62,23 @@
 		"@gov.au/skip-link": "latest",
 		"@gov.au/tags": "latest",
 		"@gov.au/text-inputs": "latest",
+		"autoprefixer": "^9.4.2",
 		"cfonts": "^2.3.0",
 		"color-string": "^1.5.3",
 		"escape-html": "^1.0.3",
 		"express": "^4.16.4",
 		"gradient-string": "^1.2.0",
 		"helmet": "^3.15.0",
-		"node-sass": "^4.10.0"
+		"node-sass": "^4.10.0",
+		"postcss-cli": "^6.0.1"
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",
-		"mocha": "^5.2.0",
-		"nodemon": "^1.18.6",
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb-base": "^12.1.0",
-		"eslint-plugin-import": "^2.12.0"
+		"eslint-plugin-import": "^2.12.0",
+		"mocha": "^5.2.0",
+		"nodemon": "^1.18.6"
 	},
 	"pancake": {
 		"auto-save": true,
@@ -102,5 +105,11 @@
 			"location": "assets/js/",
 			"name": "script.min.js"
 		}
-	}
+	},
+	"browserslist": [
+		"last 2 versions",
+		"ie 8",
+		"ie 9",
+		"ie 10"
+	]
 }

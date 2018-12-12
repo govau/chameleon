@@ -5,6 +5,8 @@
 
 // Dependencies
 const Sass = require( 'node-sass' );
+const Autoprefixer = require( 'autoprefixer' );
+const Postcss = require( 'postcss' );
 const ColorString = require( 'color-string' );
 
 
@@ -17,7 +19,7 @@ const ColorString = require( 'color-string' );
  *
  * @returns {string}           - The <style>...</style> with css in the middle
  */
-const CreateStyles = ( query, data, variables ) => {
+const CreateStyles = async ( query, data, variables ) => {
 	try {
 		// Create a SASS string to add above the sass
 		let customStyles = '';
@@ -47,7 +49,10 @@ const CreateStyles = ( query, data, variables ) => {
 		// If there are custom styles turn them into an inline <style> tag
 		if( customStyles ) {
 			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
-			styles = `<style>${ css }</style>`;
+			
+			const prefixedCSS = await Autoprefix( css );
+			
+			styles = `<style>${ prefixedCSS }</style>`;
 		}
 
 		// Send back the styles and errors
@@ -58,5 +63,32 @@ const CreateStyles = ( query, data, variables ) => {
 	}
 };
 
+/**
+ * Autoprefix - Automatically adds autoprefixes to a css file
+ *
+ * @param  {string} file - The file to be prefixed
+ *
+ * @return {string}     - Prefixed css as a string
+ */
+const Autoprefix = ( css ) => {
+	return new Promise( ( resolve, reject ) => {
+
+		// Run autoprefixer with uikit helper.js settings
+		Postcss([ Autoprefixer({
+			browsers: [ 'last 2 versions', 'ie 8', 'ie 9', 'ie 10' ]
+		}) ])
+			.process( css, { from: undefined } )
+			.then( prefixed => {
+				prefixed
+					.warnings()
+					.forEach( warningMessage => console.warn( warningMessage.toString() ) );
+
+				resolve( prefixed.css );
+			})
+			.catch( error => reject( error ) );
+
+	})
+};
 
 module.exports = CreateStyles;
+module.exports.Autoprefix = Autoprefix;
