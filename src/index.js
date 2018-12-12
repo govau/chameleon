@@ -46,8 +46,10 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 
 // Wildcard endpoint to capture all requests other than /chameleon
 App.get( '*', ( request, response ) => {
-	const page404 = Fs.readFileSync( 'assets/html/404.html', 'utf-8' );
-	response.send( page404 );
+	Fs.readFile( 'assets/html/404.html', 'utf-8', ( error, data ) => {
+		if ( error ) { console.error ( error ) };
+		response.send( data );
+	});
 });
 
 
