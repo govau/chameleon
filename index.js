@@ -79,11 +79,11 @@ const Autoprefix = ( css ) => {
  *
  * @returns {string}           - The <style>...</style> with css in the middle
  */
-const CreateStyles = ( query, data, variables ) => {
+const CreateStyles = async ( query, data, variables ) => {
 	try {
 		// Create a SASS string to add above the sass
 		let customStyles = '';
-		let styles;
+		let styles = '';
 		const errors = [];
 
 		// If the user has a query, map them to variables
@@ -110,9 +110,9 @@ const CreateStyles = ( query, data, variables ) => {
 		if( customStyles ) {
 			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
 			
-			// Apply additional prefixes to CSS for cross-browser compatability.
-			const prefixedCSS = Autoprefix( css );
-
+			// PLAN C
+			const prefixedCSS = await Autoprefix( css );
+			
 			styles = `<style>${ prefixedCSS }</style>`;
 		}
 
@@ -148,7 +148,7 @@ const RainbowMessage = ( string ) => {
  *
  * @returns {string}             - The HTML to send back to the user
  */
-const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
+const GenerateHTML = async ( url, query, endpoint, templateDir, { data, variables } = SETTINGS.sass ) => {
 	// Change endpoint to template location, remove any ../
 	const cleanURL = url.replace( /\.\.\//g, '' ).replace( endpoint, templateDir );
 
@@ -170,7 +170,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Try compile SASS into CSS
 	let errorMessages = [];
 	try {
-		const { styles, errors } = CreateStyles( query, data, variables );
+		const { styles, errors } = await CreateStyles( query, data, variables );
 		errorMessages.push( ...errors );
 
 		// If there are styles add them to the template
@@ -209,14 +209,14 @@ App.use( Helmet() );
 App.use( '/chameleon/assets', Express.static( SETTINGS.path.assets ) );
 
 // Handle requests to server on route SETTINGS.serverLocation
-App.get( `${ SETTINGS.endpoint }*`, ( request, response ) => {
+App.get( `${ SETTINGS.endpoint }*`, async ( request, response ) => {
 	// Removed XSS sameorigin policy for local testing
 	if( process.env.NODE_ENV !== 'production' ) {
 		response.removeHeader( 'X-Frame-Options' );
 	}
 
 	// Generate HTML to send back to user
-	const html = GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
+	const html = await GenerateHTML( request._parsedUrl.pathname, request.query, SETTINGS.endpoint, SETTINGS.path.templates );
 
 	// Send back the HTML to the user
 	response.send( html );
