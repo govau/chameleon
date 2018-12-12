@@ -2,8 +2,6 @@
  * slack.js - ♥ Heartbeat messages to slack
  */
 
-'use strict';
-
 const envVars = process.env.VCAP_SERVICES ? JSON.parse( process.env.VCAP_SERVICES ) : {};
 const { IncomingWebhook } = require( '@slack/client' ).IncomingWebhook;
 
