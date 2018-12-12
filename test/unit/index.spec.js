@@ -18,6 +18,7 @@ const It = Mocha.it;
 const CreateStyles = require( '../../src/style' );
 const GenerateHTML = require( '../../src/html' );
 const { Autoprefix } = require( '../../src/style' );
+const { ColorMapToString } = require( '../../src/slack' );
 
 /**
  * CreateStyles tests
@@ -222,5 +223,25 @@ Describe( 'Autoprefixer()', () => {
 		const css = await Autoprefix( 'body { box-shadow: 3px; }' );
 
 		Expect( css ).to.equal( prefixedCss );
+	});
+});
+
+
+/**
+ * Slack tests
+ */
+Describe( 'ColorMapToString()', () => {
+	It( 'Should return the correct string given a valid request query', ( done ) => {
+		const expressRequestQuery = {
+			action: 'purple',
+			background: 'red'
+		}
+		Expect( ColorMapToString( expressRequestQuery ) ).to.equal( 'action: purple, background: red' )
+		done();
+	});
+
+	It( 'Should return "no colors :(" given empty request query', ( done ) => {
+		Expect( ColorMapToString( {} ) ).to.equal( 'no colors :(' )
+		done();
 	});
 });

@@ -13,7 +13,7 @@ const Fs = require( 'fs' );
 const Settings = require( './settings' );
 const GenerateHTML = require( './html' );
 const Cli = require( './cli' );
-const { SendSlackMessage } = require( './slack' );
+const { SendSlackMessage, ColorMapToString } = require( './slack' );
 
 
 // We are using express for our server
@@ -41,7 +41,7 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	);
 
 	// Notify Slack!
-	SendSlackMessage( `Hello there!` );
+	SendSlackMessage( `Karma-Karma-Karma-Chameleon! \nGenerating template for ${request.path} using ${ColorMapToString( request.query )}` );
 
 	// Send back the HTML to the user
 	response.send( html );
