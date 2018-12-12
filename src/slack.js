@@ -26,7 +26,7 @@ const SendMessage = ( data, URL, isPrivateChannel = true ) => {
 				: {};
 
 			const message = {
-				text: `*Furnace*:\n\n`,
+				text: `*Chamaleon*:\n\n`,
 				attachments: [{
 					'fallback': 'Chama-chama-chama-chameleon!',
 					'pretext': 'Chama-chama-chama-chameleon!',
