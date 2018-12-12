@@ -1,4 +1,11 @@
-const Fs = require ( 'fs' );
+/**
+ * settings.js - The project settings
+ */
+
+
+// Dependencies
+const Fs = require( 'fs' );
+
 
 // Global settings
 module.exports = {

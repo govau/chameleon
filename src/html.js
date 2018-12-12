@@ -1,7 +1,17 @@
+/**
+ * html.js - Generation of HTML templates
+ */
+
+
+// Dependencies
 const Escape = require( 'escape-html' );
-const CreateStyles = require( './style' );
 const Fs = require( 'fs' );
+
+
+// Local dependencies
+const CreateStyles = require( './style' );
 const Settings = require( './settings' );
+
 
 /**
  * GenerateHTML - Create the HTML file
