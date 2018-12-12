@@ -13,7 +13,7 @@ const SendSlackMessage = ( message ) => {
 		? JSON.parse( process.env.VCAP_SERVICES ) 
 		: {};
 
-	if ( envVars.length > 0 ) {
+	if ( Object.keys( envVars ).length > 0 ) {
 		const URL = envVars[ 'user-provided' ][ 0 ].credentials.SLACK_WEBHOOKS[ 0 ].url
 		const SlackWebhook = new IncomingWebhook( URL );
 		
