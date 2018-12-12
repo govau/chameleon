@@ -29,7 +29,7 @@ jobs:
                   - templates/
                   - assets/
                   - package.json
-                  - index.js
+                  - src/index.js
 
 
     deploy-chameleon-dev:
