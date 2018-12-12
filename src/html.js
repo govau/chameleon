@@ -14,7 +14,7 @@ const Settings = require( './settings' );
  *
  * @returns {string}             - The HTML to send back to the user
  */
-const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = Settings.sass ) => {
+const GenerateHTML = async ( url, query, endpoint, templateDir, { data, variables } = Settings.sass ) => {
 	// Change endpoint to template location, remove any ../
 	const cleanURL = url.replace( /\.\.\//g, '' ).replace( endpoint, templateDir );
 
@@ -36,7 +36,7 @@ const GenerateHTML = ( url, query, endpoint, templateDir, { data, variables } = 
 	// Try compile SASS into CSS
 	let errorMessages = [];
 	try {
-		const { styles, errors } = CreateStyles( query, data, variables );
+		const { styles, errors } = await CreateStyles( query, data, variables );
 		errorMessages.push( ...errors );
 
 		// If there are styles add them to the template

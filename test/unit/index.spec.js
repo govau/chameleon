@@ -17,7 +17,7 @@ const It = Mocha.it;
 // Local dependencies
 const CreateStyles = require( '../../src/style' );
 const GenerateHTML = require( '../../src/html' );
-const Autoprefix = require( '../../src/css' );
+const { Autoprefix } = require( '../../src/style' );
 
 /**
  * CreateStyles tests
@@ -38,7 +38,7 @@ Describe( 'CreateStyles()', () => {
 	It( 'With no query styles or map it should return undefined', async () => {
 		const { styles } = await CreateStyles({}, '', {});
 
-		Expect( styles ).to.equal( '' );
+		Expect( styles ).to.equal( undefined );
 	});
 
 
@@ -195,8 +195,8 @@ Describe( 'Autoprefixer()', () => {
 	It( 'CSS without prefixes should be prefixed', async () => {
 
 		const prefixedCss = 'body { -webkit-box-shadow: 3px; box-shadow: 3px; }';
-
 		const css = await Autoprefix( 'body { box-shadow: 3px; }' );
+
 		Expect( css ).to.equal( prefixedCss );
 	});
 });
