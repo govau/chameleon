@@ -8,12 +8,12 @@ const Express = require( 'express' );
 const Helmet = require( 'helmet' );
 const CFonts = require( 'cfonts' );
 const Fs = require( 'fs' );
-const { SendSlackMessage } = require( './slack' );
 
 // Local dependencies
 const Settings = require( './settings' );
 const GenerateHTML = require( './html' );
 const Cli = require( './cli' );
+const { SendSlackMessage } = require( './slack' );
 
 
 // We are using express for our server
@@ -41,7 +41,7 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	);
 
 	// Notify Slack!
-	SendSlackMessage( `test` );
+	SendSlackMessage( `Hello there!` );
 
 	// Send back the HTML to the user
 	response.send( html );
