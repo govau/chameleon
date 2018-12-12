@@ -7,12 +7,12 @@
 const Express = require( 'express' );
 const Helmet = require( 'helmet' );
 const CFonts = require( 'cfonts' );
-
+const Fs = require( 'fs' );
 
 // Local dependencies
 const Settings = require( './settings' );
-const Cli = require( './cli' );
 const GenerateHTML = require( './html' );
+const Cli = require( './cli' );
 
 
 // We are using express for our server
@@ -42,6 +42,16 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	// Send back the HTML to the user
 	response.send( html );
 });
+
+
+// Wildcard endpoint to capture all requests other than /chameleon
+App.get( '*', ( request, response ) => {
+	Fs.readFile( 'assets/html/404.html', 'utf-8', ( error, data ) => {
+		if ( error ) { console.error ( error ) };
+		response.send( data );
+	});
+});
+
 
 // Start the server on the PORT
 App.listen( Settings.PORT, () => {
