@@ -1,7 +1,8 @@
 ---
 applications:
 - name: chameleon
-  buildpack: nodejs_buildpack
+  buildpacks: 
+    - nodejs_buildpack
   memory: 128M
   instances: 2
   command: node ./node_modules/.bin/pancake && npm run build && node src/index.js
@@ -9,3 +10,5 @@ applications:
     NODE_ENV: production
   routes:
     - route: designsystem.gov.au/chameleon
+  services:
+    - ups-chameleon
