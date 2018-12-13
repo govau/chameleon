@@ -41,7 +41,7 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	);
 
 	// Notify Slack!
-	SendSlackMessage( `_Karma-Karma-Karma-Chameleon!_ \nGenerating template for \`${ParseRequestPath( request.path )}\` using... ${ColorMapToString( request.query )}` );
+	SendSlackMessage( `_Karma-Karma-Karma-Chameleon!_ \nGenerating \`${ParseRequestPath( request.path )}\` template using... ${ColorMapToString( request.query )}` );
 
 	// Send back the HTML to the user
 	response.send( html );
