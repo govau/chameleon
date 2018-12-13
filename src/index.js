@@ -42,7 +42,7 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 
 	// Notify Slack!
 	// SendSlackMessage( `Karma-Karma-Karma-Chameleon! \nGenerating template for \`${request.path}\` using ${ColorMapToString( request.query )}` );
-	console.log(`*Karma-Karma-Karma-Chameleon!* \nGenerating template for \`${request.path}\` using: ${ColorMapToString( request.query )}`);
+	console.log(`_Karma-Karma-Karma-Chameleon!_ \nGenerating template for \`${request.path}\` using...${ColorMapToString( request.query )}`);
 
 	// Send back the HTML to the user
 	response.send( html );
