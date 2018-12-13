@@ -18,7 +18,7 @@ const It = Mocha.it;
 const CreateStyles = require( '../../src/style' );
 const GenerateHTML = require( '../../src/html' );
 const { Autoprefix } = require( '../../src/style' );
-const { ColorMapToString } = require( '../../src/slack' );
+const { ColorMapToString, ParseRequestPath} = require( '../../src/slack' );
 
 /**
  * CreateStyles tests
@@ -242,6 +242,23 @@ Describe( 'ColorMapToString()', () => {
 
 	It( 'Should return "no colors :(" given empty request query', ( done ) => {
 		Expect( ColorMapToString( {} ) ).to.equal( 'no colors :(' )
+		done();
+	});
+});
+
+Describe( 'ParseRequestPath()', () => {
+	It( 'Should return the homepage template when requesting /chameleon', ( done ) => {
+		Expect( ParseRequestPath( '/chameleon' ) ).to.equal( 'homepage' )
+		done();
+	});
+
+	It( 'Should return the homepage template when requesting /chameleon/', ( done ) => {
+		Expect( ParseRequestPath( '/chameleon/' ) ).to.equal( 'homepage' )
+		done();
+	});
+
+	It( 'Should return the basic template when requesting /chameleon/basic', ( done ) => {
+		Expect( ParseRequestPath( '/chameleon/basic' ) ).to.equal( 'basic' )
 		done();
 	});
 });
