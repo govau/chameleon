@@ -74,6 +74,19 @@ const ParseRequestPath = ( requestPath ) => {
 	}
 }
 
+/**
+ * Return the template name given a request.path
+ * @param {string} requestPath - Express.js request.path string
+ */
+const ParseRequestPath = ( requestPath ) => {
+	if ( requestPath.split( '/' ).length == 2 || requestPath.split( '/' )[2] == '' ) {
+		return 'homepage'
+	}
+	else {
+		return requestPath.split( '/' )[2]
+	}
+}
+
 module.exports.SendSlackMessage = SendSlackMessage;
 module.exports.ColorMapToString = ColorMapToString;
 module.exports.ParseRequestPath = ParseRequestPath;

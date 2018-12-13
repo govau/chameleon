@@ -9,3 +9,5 @@ applications:
     NODE_ENV: production
   routes:
     - route: designsystem.gov.au/chameleon
+  services:
+    - ups-chameleon
