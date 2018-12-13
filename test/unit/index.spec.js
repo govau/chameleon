@@ -240,8 +240,8 @@ Describe( 'ColorMapToString()', () => {
 		done();
 	});
 
-	It( 'Should return "no colors :(" given empty request query', ( done ) => {
-		Expect( ColorMapToString( {} ) ).to.equal( 'no colors :(' )
+	It( 'Should return "the default palette." given empty request query', ( done ) => {
+		Expect( ColorMapToString( {} ) ).to.equal( 'the default palette.' )
 		done();
 	});
 });
