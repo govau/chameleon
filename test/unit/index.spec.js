@@ -236,7 +236,7 @@ Describe( 'ColorMapToString()', () => {
 			action: 'purple',
 			background: 'red'
 		}
-		Expect( ColorMapToString( expressRequestQuery ) ).to.equal( 'action: purple, background: red' )
+		Expect( ColorMapToString( expressRequestQuery ) ).to.equal( '\n`action`: #800080\n`background`: #FF0000' )
 		done();
 	});
 

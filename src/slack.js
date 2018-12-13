@@ -3,6 +3,7 @@
  */
 
 const { IncomingWebhook } = require('@slack/client');
+const ColorString = require( 'color-string' );
 
 /**
  * Send a slack message to #chameleon
@@ -35,17 +36,25 @@ const SendSlackMessage = ( message ) => {
  * @param {object} request - Express.js request.query
  */
 const ColorMapToString = ( requestQuery ) => {
-	let colors = "";
+	let darkColors = ``;
+	let defaultColors = ``;
 
 	if ( Object.keys( requestQuery ).length > 0 ) {
-		for ( const [key, value] of Object.entries( requestQuery ) ) {
-			colors += `${key}: ${value}, `
+		for ( const [ key, value ] of Object.entries( requestQuery ) ) {
+			if ( key.includes( 'dark' ) || key.includes( 'Dark' ) ) {
+				darkColors += `\n\`${key}\`: ${ColorString.to.hex( ColorString.get.rgb( value ) )}`
+			}
+			else {
+				defaultColors += `\n\`${key}\`: ${ColorString.to.hex( ColorString.get.rgb( value ) )}`
+			}
 		}
-	
-		// Trim trailing comma
-		colors = colors.replace(/,\s*$/g, "")
 
-		return colors;
+		if ( darkColors ) {
+			return `${defaultColors}\n*Dark Palette:*${darkColors}`;
+		}
+		else {
+			return `${defaultColors}`;
+		}
 	}
 	else {
 		return "no colors :("
