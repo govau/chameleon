@@ -1,10 +1,13 @@
 ---
 applications:
 - name: chameleon
-  buildpack: nodejs_buildpack
+  buildpacks: 
+    - nodejs_buildpack
   memory: 128M
   instances: 1
   command: node ./node_modules/.bin/pancake && npm run build && node src/index.js
   env: 
     NODE_ENV: development
     NODE_MODULES_CACHE: false
+  services:
+    - ups-chameleon
