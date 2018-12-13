@@ -57,7 +57,7 @@ const ColorMapToString = ( requestQuery ) => {
 		}
 	}
 	else {
-		return "no colors :("
+		return "the default palette."
 	}
 }
 
