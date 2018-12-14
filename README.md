@@ -56,6 +56,6 @@ Wuhuu thanks for considering contributing! We are always looking to make chamele
 <div style="display:inline;">
   <a href="https://github.com/adamzerella"><img width="64" height="64" src="https://avatars0.githubusercontent.com/u/1501560?s=460&v=4" alt="Adam A. Zerella"/></a>
   <a href="https://github.com/alex-page"><img width="64" height="64" src="https://avatars0.githubusercontent.com/u/19199063?s=460&v=4" alt="Alex Page"/></a>
-  <a href="href="https://github.com/sukhrajghuman"><img width="64" height="64" src="https://avatars1.githubusercontent.com/u/20184809?s=460&v=4" alt="Sukhraj Ghuman"/></a>
+  <a href="https://github.com/sukhrajghuman"><img width="64" height="64" src="https://avatars1.githubusercontent.com/u/20184809?s=460&v=4" alt="Sukhraj Ghuman"/></a>
 </div>
 
