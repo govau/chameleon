@@ -40,8 +40,10 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 		Settings.path.templates,
 	);
 
-	// Notify Slack!
-	SendSlackMessage( `_Karma-Karma-Karma-Chameleon!_ \nGenerating \`${ParseRequestPath( request.path )}\` template using... ${ColorMapToString( request.query )}` );
+	// Notify Slack! 
+	if ( process.env.VCAP_SERVICES ) {
+		SendSlackMessage( `_Karma-Karma-Karma-Chameleon!_ \nGenerating \`${ParseRequestPath( request.path )}\` template using... ${ColorMapToString( request.query )}` );
+	}
 
 	// Send back the HTML to the user
 	response.send( html );
