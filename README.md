@@ -21,7 +21,7 @@ Make sure you are in your cloned directory and install the dependencies:
 npm install
 ```
 
-Then run `npm start` or `npm watch`.
+Then run `npm run start` or `npm run watch`.
 
 
 ## Getting started
