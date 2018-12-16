@@ -18,6 +18,7 @@ const It = Mocha.it;
 const CreateStyles = require( '../../src/style' );
 const GenerateHTML = require( '../../src/html' );
 const { Autoprefix } = require( '../../src/style' );
+const { ColorMapToString, ParseRequestPath} = require( '../../src/slack' );
 
 /**
  * CreateStyles tests
@@ -222,5 +223,42 @@ Describe( 'Autoprefixer()', () => {
 		const css = await Autoprefix( 'body { box-shadow: 3px; }' );
 
 		Expect( css ).to.equal( prefixedCss );
+	});
+});
+
+
+/**
+ * Slack tests
+ */
+Describe( 'ColorMapToString()', () => {
+	It( 'Should return the correct string given a valid request query', ( done ) => {
+		const expressRequestQuery = {
+			action: 'purple',
+			background: 'red'
+		}
+		Expect( ColorMapToString( expressRequestQuery ) ).to.equal( '\n`action`: #800080\n`background`: #FF0000' )
+		done();
+	});
+
+	It( 'Should return "the default palette." given empty request query', ( done ) => {
+		Expect( ColorMapToString( {} ) ).to.equal( 'the default palette.' )
+		done();
+	});
+});
+
+Describe( 'ParseRequestPath()', () => {
+	It( 'Should return the homepage template when requesting /chameleon', ( done ) => {
+		Expect( ParseRequestPath( '/chameleon' ) ).to.equal( 'homepage' )
+		done();
+	});
+
+	It( 'Should return the homepage template when requesting /chameleon/', ( done ) => {
+		Expect( ParseRequestPath( '/chameleon/' ) ).to.equal( 'homepage' )
+		done();
+	});
+
+	It( 'Should return the basic template when requesting /chameleon/basic', ( done ) => {
+		Expect( ParseRequestPath( '/chameleon/basic' ) ).to.equal( 'basic' )
+		done();
 	});
 });
