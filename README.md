@@ -32,7 +32,15 @@ Chameleon looks like a full page template using the Australian Government Design
 
 To change the colours you can add a query parameter. [http://localhost:3000/chameleon/content?action=red&background=#eee](http://localhost:3000/chameleon/content?action=red&background=#eee).
 
-The supported query parameters are `text`, `action`, `focus`, `background` and `textDark`, `actionDark`, `focusDark`, `backgroundDark`. Using these queries you can modify the templates and share them.
+Using query parameters you can modify the templates and share them. The supported query parameters are:
+ - `text`, the default text colour
+ - `action`, the interactive colour used on buttons and links
+ - `focus`, the focus colour when interactive elements receive focus
+ - `background`, the background colour
+ - `textDark`, dark variation of the text colour
+ - `actionDark`, dark variation of the action colour
+ - `focusDark`, dark variation of the focus colour
+ - `backgroundDark`, dark variation of the background colour
 
 
 ## How it works
