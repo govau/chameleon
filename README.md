@@ -2,7 +2,7 @@
 
 > Interactive colour template previews for the Design System.
 
-Chameleon allows users to change and share different colour palettes using the Australian Government Design System. It is an express server that takes query parameters altering the apperance of the template. 
+Chameleon allows users to change and share different colour palettes using the Australian Government Design System. It is a server that takes query parameters altering the appearance of the template. 
 
 You can access it through a user interface at [https://designsystem.gov.au/templates/home/customise](https://designsystem.gov.au/templates/home/customise) if you want to use it locally you can follow the instructions below. 
 
@@ -37,7 +37,7 @@ The supported query parameters are `text`, `action`, `focus`, `background` and `
 
 ## How it works
 
-The express server reads the data from the HTML files based on the URL. If there are valid query parameters it generates a new stylesheet and replaces the `<link rel="stylesheet" href="/chameleon/assets/css/main.css">` with the new styles. If there is an invalid colour entered it will log errors in the page template returned to the user.
+The server ( [expressjs](https://expressjs.com/ ) reads the data from the HTML files based on the URL. If there are valid query parameters it generates a new stylesheet and replaces the `<link rel="stylesheet" href="/chameleon/assets/css/main.css">` with the new styles. If there is an invalid colour entered it will log errors in the page template returned to the user.
 
 We then serve the API to our users in an iframe, allowing users to modify the user interface with a form on the frontend. As we use query parameters the custom templates can be shared with peers.
 
