@@ -45,14 +45,14 @@ Using query parameters you can modify the templates and share them. The supporte
 
 ## How it works
 
-The server ( [expressjs](https://expressjs.com/ ) reads the data from the HTML files based on the URL. If there are valid query parameters it generates a new stylesheet and replaces the `<link rel="stylesheet" href="/chameleon/assets/css/main.css">` with the new styles. If there is an invalid colour entered it will log errors in the page template returned to the user.
+The server [expressjs](https://expressjs.com/ ) reads the data from the HTML files based on the URL. If there are valid query parameters it generates a new stylesheet and replaces the `<link rel="stylesheet" href="/chameleon/assets/css/main.css">` with the new styles. If there is an invalid colour entered it will log errors in the page template returned to the user.
 
 We then serve the API to our users in an iframe, allowing users to modify the user interface with a form on the frontend. As we use query parameters the custom templates can be shared with peers.
 
 
 ## Contributing
 
-Wuhuu thanks for considering contributing! We are always looking to make chameleon better, please have a look at our [issues](issues) and use the above documentation to make changes and create a pull request.
+Wuhuu! thanks for considering contributing! We are always looking to make chameleon better, please have a look at our [issues](issues) and use the above documentation to make changes and create a pull request.
 
 
 ## Release history
