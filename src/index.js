@@ -13,7 +13,7 @@ const Fs = require( 'fs' );
 const Settings = require( './settings' );
 const GenerateHTML = require( './html' );
 const Cli = require( './cli' );
-const { SendSlackMessage, ColorMapToString, ParseRequestPath } = require( './slack' );
+const SendChameleonMessage = require( './slack' );
 
 
 // We are using express for our server
@@ -40,10 +40,12 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 		Settings.path.templates,
 	);
 
-	// Notify Slack! 
-	if ( process.env.VCAP_SERVICES ) {
-		SendSlackMessage( `_Karma-Karma-Karma-Chameleon!_ \nGenerating \`${ParseRequestPath( request.path )}\` template using... ${ColorMapToString( request.query )}` );
+	// Notify Slack!
+	if( process.env.VCAP_SERVICES ) {
+		SendChameleonMessage( request.path, request.query );
 	}
+
+	SendChameleonMessage( request.path, request.query );
 
 	// Send back the HTML to the user
 	response.send( html );
@@ -53,7 +55,10 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 // Wildcard endpoint to capture all requests other than /chameleon
 App.get( '*', ( request, response ) => {
 	Fs.readFile( 'assets/html/404.html', 'utf-8', ( error, data ) => {
-		if ( error ) { console.error ( error ) };
+		if( error ) {
+			console.error ( error );
+		}
+
 		response.send( data );
 	});
 });
