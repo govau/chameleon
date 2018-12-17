@@ -1,5 +1,2 @@
-# 0.2.1
--   Sanitised user input
-
-# 0.2.0
+# 1.0.0
 -   🎉 Initial release
