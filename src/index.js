@@ -13,6 +13,7 @@ const Fs = require( 'fs' );
 const Settings = require( './settings' );
 const GenerateHTML = require( './html' );
 const Cli = require( './cli' );
+const { SendSlackMessage, ColorMapToString, ParseRequestPath } = require( './slack' );
 
 
 // We are using express for our server
@@ -38,6 +39,11 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 		Settings.endpoint,
 		Settings.path.templates,
 	);
+
+	// Notify Slack! 
+	if ( process.env.VCAP_SERVICES ) {
+		SendSlackMessage( `_Karma-Karma-Karma-Chameleon!_ \nGenerating \`${ParseRequestPath( request.path )}\` template using... ${ColorMapToString( request.query )}` );
+	}
 
 	// Send back the HTML to the user
 	response.send( html );
