@@ -45,8 +45,6 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 		SendChameleonMessage( request.path, request.query );
 	}
 
-	SendChameleonMessage( request.path, request.query );
-
 	// Send back the HTML to the user
 	response.send( html );
 });
