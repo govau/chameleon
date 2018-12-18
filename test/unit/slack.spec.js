@@ -66,4 +66,9 @@ Describe( 'GetTemplateFromURL()', () => {
 		Expect( GetTemplateFromURL( '/chameleon/basic' ) ).to.equal( 'basic' );
 		done();
 	});
+
+	It( 'Should return the basic template when requesting /chameleon/basic/', ( done ) => {
+		Expect( GetTemplateFromURL( '/chameleon/basic/' ) ).to.equal( 'basic' );
+		done();
+	});
 });
