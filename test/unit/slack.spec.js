@@ -14,36 +14,47 @@ const It = Mocha.it;
 
 
 // Local dependencies
-const SendChameleonMessage = require( '../../src/slack' );
-const { GetTemplateFromURL, QueryToHexString } = require( '../../src/slack' );
+const {
+	GenerateChameleonMessage,
+	GetTemplateFromURL,
+	QueryToHexString,
+} = require( '../../src/slack' );
 
 
 /**
- * SendChameleonMessage tests
+ * GenerateChameleonMessage tests
  */
-// Describe( 'SendChameleonMessage()', () => {
+Describe( 'GenerateChameleonMessage()', () => {
+	It( 'Should create a chameleon message', () => {
+		const query = {
+			action:     'purple',
+			background: 'red',
+		};
+		const url = '/chameleon/form/';
+		const message = GenerateChameleonMessage( url, query );
 
+		let fixture = '---\n_Karma-Karma-Karma-Chameleon!_\n\nGenerating *form* page template\n\n';
+		fixture += '`action`: #800080\n`background`: #FF0000\n';
 
-
-// });
+		Expect( message ).to.equal( fixture );
+	});
+});
 
 
 /**
  * QueryToHexString tests
  */
 Describe( 'QueryToHexString()', () => {
-	It( 'Should return the correct string given a valid request query', ( done ) => {
+	It( 'Should return the correct string given a valid request query', () => {
 		const query = {
 			action:     'purple',
 			background: 'red',
 		};
 		Expect( QueryToHexString( query ) ).to.equal( '`action`: #800080\n`background`: #FF0000\n' );
-		done();
 	});
 
-	It( 'Should return "the default palette." given empty request query', ( done ) => {
+	It( 'Should return "the default palette." given empty request query', () => {
 		Expect( QueryToHexString({}) ).to.equal( '' );
-		done();
 	});
 });
 
@@ -52,23 +63,19 @@ Describe( 'QueryToHexString()', () => {
  * GetTemplateFromURL tests
  */
 Describe( 'GetTemplateFromURL()', () => {
-	It( 'Should return the homepage template when requesting /chameleon', ( done ) => {
+	It( 'Should return the homepage template when requesting /chameleon', () => {
 		Expect( GetTemplateFromURL( '/chameleon' ) ).to.equal( 'homepage' );
-		done();
 	});
 
-	It( 'Should return the homepage template when requesting /chameleon/', ( done ) => {
+	It( 'Should return the homepage template when requesting /chameleon/', () => {
 		Expect( GetTemplateFromURL( '/chameleon/' ) ).to.equal( 'homepage' );
-		done();
 	});
 
-	It( 'Should return the basic template when requesting /chameleon/basic', ( done ) => {
+	It( 'Should return the basic template when requesting /chameleon/basic', () => {
 		Expect( GetTemplateFromURL( '/chameleon/basic' ) ).to.equal( 'basic' );
-		done();
 	});
 
-	It( 'Should return the basic template when requesting /chameleon/basic/', ( done ) => {
+	It( 'Should return the basic template when requesting /chameleon/basic/', () => {
 		Expect( GetTemplateFromURL( '/chameleon/basic/' ) ).to.equal( 'basic' );
-		done();
 	});
 });
