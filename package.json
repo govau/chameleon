@@ -63,8 +63,8 @@
 		"@gov.au/skip-link": "latest",
 		"@gov.au/tags": "latest",
 		"@gov.au/text-inputs": "latest",
-		"autoprefixer": "^9.4.2",
 		"@slack/client": "^4.8.0",
+		"autoprefixer": "^9.4.2",
 		"cfonts": "^2.3.0",
 		"color-string": "^1.5.3",
 		"escape-html": "^1.0.3",
@@ -72,6 +72,7 @@
 		"gradient-string": "^1.2.0",
 		"helmet": "^3.15.0",
 		"node-sass": "^4.10.0",
+		"postcss": "^7.0.7",
 		"postcss-cli": "^6.0.1"
 	},
 	"devDependencies": {
