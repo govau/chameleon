@@ -11,6 +11,30 @@ const ColorString = require( 'color-string' );
 
 
 /**
+ * Autoprefix - Automatically adds autoprefixes to a css file
+ *
+ * @param  {string} css - The file to be prefixed
+ *
+ * @return {string}     - Prefixed css as a string
+ */
+const Autoprefix = css => new Promise( ( resolve, reject ) => {
+	// Run autoprefixer with uikit helper.js settings
+	Postcss( [ Autoprefixer({
+		browsers: [ 'last 2 versions', 'ie 8', 'ie 9', 'ie 10' ],
+	}) ] )
+		.process( css, { from: undefined })
+		.then( ( prefixed ) => {
+			prefixed
+				.warnings()
+				.forEach( warningMessage => console.warn( warningMessage.toString() ) );
+
+			resolve( prefixed.css );
+		})
+		.catch( error => reject( error ) );
+});
+
+
+/**
  * CreateStyles - Creates a HTML style tag with generated css
  *
  * @param   {object} query     - An object containing the queries
@@ -49,9 +73,9 @@ const CreateStyles = async ( query, data, variables ) => {
 		// If there are custom styles turn them into an inline <style> tag
 		if( customStyles ) {
 			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
-			
+
 			const prefixedCSS = await Autoprefix( css );
-			
+
 			styles = `<style>${ prefixedCSS }</style>`;
 		}
 
@@ -63,32 +87,6 @@ const CreateStyles = async ( query, data, variables ) => {
 	}
 };
 
-/**
- * Autoprefix - Automatically adds autoprefixes to a css file
- *
- * @param  {string} file - The file to be prefixed
- *
- * @return {string}     - Prefixed css as a string
- */
-const Autoprefix = ( css ) => {
-	return new Promise( ( resolve, reject ) => {
-
-		// Run autoprefixer with uikit helper.js settings
-		Postcss([ Autoprefixer({
-			browsers: [ 'last 2 versions', 'ie 8', 'ie 9', 'ie 10' ]
-		}) ])
-			.process( css, { from: undefined } )
-			.then( prefixed => {
-				prefixed
-					.warnings()
-					.forEach( warningMessage => console.warn( warningMessage.toString() ) );
-
-				resolve( prefixed.css );
-			})
-			.catch( error => reject( error ) );
-
-	})
-};
 
 module.exports = CreateStyles;
 module.exports.Autoprefix = Autoprefix;

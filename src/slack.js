@@ -2,78 +2,121 @@
  * slack.js - ♥ Heartbeat messages to slack
  */
 
-const { IncomingWebhook } = require('@slack/client');
+
+// Depedencies
+const { IncomingWebhook } = require( '@slack/client' );
 const ColorString = require( 'color-string' );
 
+
 /**
- * Send a slack message to #chameleon
+ * SendSlackMessage - Send a slack message to #chameleon
+ *
  * @param {string} message - Message to send to Slack
  */
 const SendSlackMessage = ( message ) => {
-	const envVars = process.env.VCAP_SERVICES 
-		? JSON.parse( process.env.VCAP_SERVICES ) 
+	const envVars = process.env.VCAP_SERVICES
+		? JSON.parse( process.env.VCAP_SERVICES )
 		: {};
 
-	if ( Object.keys( envVars ).length > 0 ) {
-		const URL = envVars[ 'user-provided' ][ 0 ].credentials.SLACK_WEBHOOKS[ 0 ].url
+	if( Object.keys( envVars ).length > 0 ) {
+		const URL = envVars[ 'user-provided' ][ 0 ].credentials.SLACK_WEBHOOKS[ 0 ].url;
 		const SlackWebhook = new IncomingWebhook( URL );
-		
+
 		SlackWebhook.send( message, ( error, response ) => {
-			if ( error ) {
+			if( error ) {
 				console.error( 'Error:', error );
-			} 
+			}
 			else {
 				console.log( 'Slack message sent: ', response );
 			}
 		});
 	}
-}
+};
 
 
 /**
- * Generate a string of colours from an express.js request.query
- * e.g 'action: red, background: black'
- * @param {object} request - Express.js request.query
+ * QueryToHex - Get hex values of colours
+ *
+ * @param   {object} query  - Query parameters in URL
+ *
+ * @returns {object}        - Sends back an object with hexadecimals
  */
-const ColorMapToString = ( requestQuery ) => {
-	let darkColors = ``;
-	let defaultColors = ``;
+const QueryToHexString = ( query ) => {
+	let hexString = '';
 
-	if ( Object.keys( requestQuery ).length > 0 ) {
-		for ( const [ key, value ] of Object.entries( requestQuery ) ) {
-			if ( key.includes( 'dark' ) || key.includes( 'Dark' ) ) {
-				darkColors += `\n\`${key}\`: ${ColorString.to.hex( ColorString.get.rgb( value ) )}`
+	// For each item in query
+	Object.entries( query )
+		.forEach( ( [ colorName, color ] ) => {
+			const rgbColor = ColorString.get.rgb( color );
+
+			// If a valid colour add it to object and return hex value
+			if( rgbColor ) {
+				const hexColor = ColorString.to.hex( rgbColor );
+				hexString += `\`${ colorName }\`: ${ hexColor }\n`;
 			}
-			else {
-				defaultColors += `\n\`${key}\`: ${ColorString.to.hex( ColorString.get.rgb( value ) )}`
-			}
-		}
-		
-		if ( darkColors ) {
-			return `${defaultColors}\n*Dark Palette:*${darkColors}`;
-		}
-		else {
-			return `${defaultColors}`;
-		}
-	}
-	else {
-		return "the default palette."
-	}
-}
+		});
+
+	return hexString;
+};
+
 
 /**
- * Return the template name given a request.path
- * @param {string} requestPath - Express.js request.path string
+ * GetTemplateFromURL - Return the template name given a request.path
+ *
+ * @param   {string} url - Express.js request.path string
+ *
+ * @returns {string}     - The template
  */
-const ParseRequestPath = ( requestPath ) => {
-	if ( requestPath.split( '/' ).length == 2 || requestPath.split( '/' )[2] == '' ) {
-		return 'homepage'
-	}
-	else {
-		return requestPath.split( '/' )[2]
-	}
-}
+const GetTemplateFromURL = ( url ) => {
+	const baseUrl = url.split( '/' )[ 2 ];
 
+	// If it is not the home page
+	if( baseUrl && baseUrl !== '' ) {
+		return baseUrl;
+	}
+
+	return 'homepage';
+};
+
+
+/**
+ * GenerateChameleonMessage - Creates a formatted message
+ *
+ * @param   {string} url   - The url that hit the API
+ * @param   {object} query - The queries that hit the API
+ *
+ * @returns {string}       - The formatted message
+ */
+const GenerateChameleonMessage = ( url, query ) => {
+	let message = '---\n_Karma-Karma-Karma-Chameleon!_\n\n';
+
+	if( url ) {
+		const template = GetTemplateFromURL( url );
+		message += `Generating *${ template }* page template\n\n`;
+	}
+
+	if( query !== {}) {
+		message += QueryToHexString( query );
+	}
+
+	return message;
+};
+
+
+/**
+ * SendChameleonMessage - Send a slack message to #chameleon
+ *
+ * @param {string} url   - The url that hit the API
+ * @param {object} query - The queries that hit the API
+ */
+const SendChameleonMessage = ( url, query ) => {
+	const message = GenerateChameleonMessage( url, query );
+	SendSlackMessage( message );
+};
+
+
+module.exports = SendChameleonMessage;
+module.exports.GenerateChameleonMessage = GenerateChameleonMessage;
 module.exports.SendSlackMessage = SendSlackMessage;
-module.exports.ColorMapToString = ColorMapToString;
-module.exports.ParseRequestPath = ParseRequestPath;
+module.exports.QueryToHexString = QueryToHexString;
+module.exports.GetTemplateFromURL = GetTemplateFromURL;
