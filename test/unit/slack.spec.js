@@ -71,11 +71,11 @@ Describe( 'GetTemplateFromURL()', () => {
 		Expect( GetTemplateFromURL( '/chameleon/' ) ).to.equal( 'homepage' );
 	});
 
-	It( 'Should return the basic template when requesting /chameleon/basic', () => {
-		Expect( GetTemplateFromURL( '/chameleon/basic' ) ).to.equal( 'basic' );
+	It( 'Should return the content template when requesting /chameleon/content', () => {
+		Expect( GetTemplateFromURL( '/chameleon/content' ) ).to.equal( 'content' );
 	});
 
-	It( 'Should return the basic template when requesting /chameleon/basic/', () => {
-		Expect( GetTemplateFromURL( '/chameleon/basic/' ) ).to.equal( 'basic' );
+	It( 'Should return the content template when requesting /chameleon/content/', () => {
+		Expect( GetTemplateFromURL( '/chameleon/content/' ) ).to.equal( 'content' );
 	});
 });
