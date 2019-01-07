@@ -50,7 +50,6 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 		response.send( html );
 	}
 	catch ( error ) {
-		// console.error(error);
 		throw new Error( error );
 	}
 });
