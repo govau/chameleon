@@ -43,7 +43,7 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	
 		// Notify Slack!
 		if( process.env.VCAP_SERVICES ) {
-			SendChameleonMessage( request.path, request.query );
+			SendChameleonMessage( request.url, request.path, request.query );
 		}
 	
 		// Send back the HTML to the user
