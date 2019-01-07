@@ -2,7 +2,7 @@ version: 2
 jobs:
     build-and-test-chameleon:
         docker:
-            - image: circleci/node:10.13.0
+            - image: circleci/node:10.15.0
         working_directory: ~/chameleon
         steps:
             - checkout
