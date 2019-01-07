@@ -8,7 +8,7 @@ applications:
   memory: 256M # Used to be 128M but using Node.js experimental features like fs.promises requires more :'(
 >>>>>>> cacd5ce8cfdb693d0a86e8b0d7a3d70f2d07663b
   instances: 1
-  command: node ./node_modules/.bin/pancake && npm run build && node src/server.js
+  command: node ./node_modules/.bin/pancake && npm run build && node src/index.js
   env: 
     NODE_ENV: development
     NODE_MODULES_CACHE: false
