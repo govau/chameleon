@@ -89,7 +89,7 @@ const GetTemplateFromURL = ( url ) => {
  * @returns {string}       - The formatted message
  */
 const GenerateChameleonMessage = ( url, path, query ) => {
-	let message = '\n\n_Karma-Karma-Karma-Chameleon!_\n\n';
+	let message = '>_Karma-Karma-Karma-Chameleon!_\n\n';
 
 	if( path ) {
 		const template = GetTemplateFromURL( path );
