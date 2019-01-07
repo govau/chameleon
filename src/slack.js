@@ -52,7 +52,7 @@ const QueryToHexString = ( query ) => {
 			// If a valid colour add it to object and return hex value
 			if( rgbColor ) {
 				const hexColor = ColorString.to.hex( rgbColor );
-				hexString += `\`${ colorName }\`: ${ hexColor }\n`;
+				hexString += `> \`${ colorName }\`: ${ hexColor }\n`;
 			}
 		});
 
@@ -82,25 +82,26 @@ const GetTemplateFromURL = ( url ) => {
 /**
  * GenerateChameleonMessage - Creates a formatted message
  *
- * @param   {string} url   - The URL that hit the API
  * @param   {string} path  - The URL path
  * @param   {object} query - The queries that hit the API
  *
  * @returns {string}       - The formatted message
  */
-const GenerateChameleonMessage = ( url, path, query ) => {
-	let message = '>_*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n';
+const GenerateChameleonMessage = ( path, query ) => {
+	let message = '> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n';
 
+	const template = GetTemplateFromURL( path );
+	
 	if( path ) {
-		const template = GetTemplateFromURL( path );
-		message += `Generating *${ template }* page template\n\n`;
+		message += `> Generating *${ template }* page template\n\n`;
 	}
 
 	if( query !== {}) {
-		message += QueryToHexString( query );
+		message += `${ QueryToHexString( query ) }`;
 	}
 
-	message += `Preview: ${ url }`
+	// Append a preview URL to message.
+	message += `> https://designsystem.gov.au/templates/${ template }/customise/${ query }`;
 
 	return message;
 };
@@ -109,12 +110,11 @@ const GenerateChameleonMessage = ( url, path, query ) => {
 /**
  * SendChameleonMessage - Send a slack message to #chameleon
  *
- * @param {string} url   - The URL that hit the API
  * @param {string} path   - The URL path
  * @param {object} query - The queries that hit the API
  */
-const SendChameleonMessage = ( url, path, query ) => {
-	const message = GenerateChameleonMessage( url, path, query );
+const SendChameleonMessage = ( path, query ) => {
+	const message = GenerateChameleonMessage( path, query );
 	SendSlackMessage( message );
 };
 
