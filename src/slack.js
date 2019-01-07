@@ -82,12 +82,13 @@ const GetTemplateFromURL = ( url ) => {
 /**
  * GenerateChameleonMessage - Creates a formatted message
  *
- * @param   {string} url   - The url that hit the API
+ * @param   {string} url   - The URL that hit the API
+ * @param   {string} path   - The URL path
  * @param   {object} query - The queries that hit the API
  *
  * @returns {string}       - The formatted message
  */
-const GenerateChameleonMessage = ( url, query ) => {
+const GenerateChameleonMessage = ( url, path, query ) => {
 	let message = '---\n_Karma-Karma-Karma-Chameleon!_\n\n';
 
 	if( url ) {
@@ -99,6 +100,8 @@ const GenerateChameleonMessage = ( url, query ) => {
 		message += QueryToHexString( query );
 	}
 
+	message += `Preview: ${url}`
+
 	return message;
 };
 
@@ -106,11 +109,12 @@ const GenerateChameleonMessage = ( url, query ) => {
 /**
  * SendChameleonMessage - Send a slack message to #chameleon
  *
- * @param {string} url   - The url that hit the API
+ * @param {string} url   - The URL that hit the API
+ * @param {string} path   - The URL path
  * @param {object} query - The queries that hit the API
  */
-const SendChameleonMessage = ( url, query ) => {
-	const message = GenerateChameleonMessage( url, query );
+const SendChameleonMessage = ( url, path, query ) => {
+	const message = GenerateChameleonMessage( url, path, query );
 	SendSlackMessage( message );
 };
 
