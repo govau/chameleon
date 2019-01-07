@@ -18,9 +18,9 @@ const RenderSass = ( options ) => {
     return new Promise ( ( resolve, reject ) => {
         Sass.render( options, ( error, result ) => {
             error ? reject( error) : resolve( result );
-        } )
-    })
-}
+        });
+    });
+};
 
 
 module.exports.RenderSass = RenderSass;
