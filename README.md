@@ -57,7 +57,9 @@ Wuhuu! thanks for considering contributing! We are always looking to make chamel
 
 ## Release history
 
+- v1.1.0 - Implemented asyncronous functionality and Slack integration.
 - v1.0.0 - 🎉 Initial release
+
 
 
 # Contributors:

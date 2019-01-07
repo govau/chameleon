@@ -4,7 +4,7 @@ applications:
   buildpack: nodejs_buildpack
   memory: 256M # Used to be 128M but using Node.js experimental features like fs.promises requires more :'(
   instances: 1
-  command: node ./node_modules/.bin/pancake && npm run build && node src/server.js
+  command: node ./node_modules/.bin/pancake && npm run build && node src/index.js
   env: 
     NODE_ENV: development
     NODE_MODULES_CACHE: false
