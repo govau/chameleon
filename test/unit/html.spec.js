@@ -6,7 +6,7 @@
 // Dependencies
 const Chai = require( 'chai' );
 const Mocha = require( 'mocha' );
-const Fs = require( 'fs' );
+const Fs = require( 'fs' ).promises;
 
 // Functions from Chai and Mocha
 const Expect = Chai.expect;
@@ -33,7 +33,7 @@ Describe( 'GenerateHTML()', () => {
 			},
 		);
 
-		const fixture = Fs.readFileSync(
+		const fixture = await Fs.readFile(
 			'test/unit/fixtures/fixture-background-red.html',
 			'utf-8',
 		);
@@ -54,7 +54,7 @@ Describe( 'GenerateHTML()', () => {
 			},
 		);
 
-		const fixture = Fs.readFileSync(
+		const fixture = await Fs.readFile(
 			'test/unit/fixtures/fixture-error.html',
 			'utf-8',
 		);
@@ -75,7 +75,7 @@ Describe( 'GenerateHTML()', () => {
 			},
 		);
 
-		const fixture = Fs.readFileSync(
+		const fixture = await Fs.readFile(
 			'test/unit/fixtures/fixture-styles-with-error.html',
 			'utf-8',
 		);
@@ -99,7 +99,7 @@ Describe( 'GenerateHTML()', () => {
 			},
 		);
 
-		const fixture = Fs.readFileSync(
+		const fixture = await Fs.readFile(
 			'test/unit/fixtures/fixture-xss.html',
 			'utf-8',
 		);
@@ -122,7 +122,7 @@ Describe( 'GenerateHTML()', () => {
 			},
 		);
 
-		const fixture = Fs.readFileSync(
+		const fixture = await Fs.readFile(
 			'test/unit/fixtures/fixture-xss-advanced.html',
 			'utf-8',
 		);
