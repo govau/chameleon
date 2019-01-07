@@ -34,7 +34,7 @@ Describe( 'GenerateChameleonMessage()', () => {
 		const path = '/chameleon/form/';
 		const message = GenerateChameleonMessage( url, path, query );
 
-		let fixture = '>_Karma-Karma-Karma-Chameleon!_\n\nGenerating *form* page template\n\n';
+		let fixture = '>_*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\nGenerating *form* page template\n\n';
 		fixture += '`action`: #800080\n`background`: #FF0000\n';
 		fixture += `Preview: ${url}`;
 
