@@ -71,8 +71,7 @@ const CreateStyles = async ( query, data, variables ) => {
 
 		// If there are custom styles turn them into an inline <style> tag
 		if( customStyles ) {
-			const { css } = await RenderSass( { data: customStyles, outputStyle: 'compressed' } );
-
+			const { css } = await RenderSass({ data: customStyles, outputStyle: 'compressed' });
 			const prefixedCSS = await Autoprefix( css );
 
 			styles = `<style>${ prefixedCSS }</style>`;
