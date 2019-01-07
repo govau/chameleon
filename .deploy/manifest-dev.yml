@@ -2,7 +2,7 @@
 applications:
 - name: chameleon
   buildpack: nodejs_buildpack
-  memory: 512M
+  memory: 512M # Used to be 128M but using Node.js experimental features like fs.promises requires more :'(
   instances: 1
   command: node ./node_modules/.bin/pancake && npm run build && node src/server.js
   env: 
