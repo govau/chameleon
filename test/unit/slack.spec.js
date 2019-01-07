@@ -30,13 +30,13 @@ Describe( 'GenerateChameleonMessage()', () => {
 			action:     'purple',
 			background: 'red',
 		};
-		const url = '/chameleon/form/';
-		const path = 'https://coolwebsite41/chameleon/form/';
+		const url = 'https://coolwebsite41/chameleon/form/';
+		const path = '/chameleon/form/';
 		const message = GenerateChameleonMessage( url, path, query );
 
 		let fixture = '---\n_Karma-Karma-Karma-Chameleon!_\n\nGenerating *form* page template\n\n';
 		fixture += '`action`: #800080\n`background`: #FF0000\n';
-		fixture += 'Preview: https://coolwebsite41/chameleon/form/';
+		fixture += `Preview: ${url}`;
 
 		Expect( message ).to.equal( fixture );
 	});

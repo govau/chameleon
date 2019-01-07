@@ -91,8 +91,8 @@ const GetTemplateFromURL = ( url ) => {
 const GenerateChameleonMessage = ( url, path, query ) => {
 	let message = '---\n_Karma-Karma-Karma-Chameleon!_\n\n';
 
-	if( url ) {
-		const template = GetTemplateFromURL( url );
+	if( path ) {
+		const template = GetTemplateFromURL( path );
 		message += `Generating *${ template }* page template\n\n`;
 	}
 
@@ -100,7 +100,7 @@ const GenerateChameleonMessage = ( url, path, query ) => {
 		message += QueryToHexString( query );
 	}
 
-	message += `Preview: ${url}`
+	message += `Preview: ${ url }`
 
 	return message;
 };
