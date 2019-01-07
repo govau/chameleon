@@ -6,11 +6,11 @@
 // Dependencies
 const Fs = require( 'fs' );
 
+const sassFile = Fs.readFileSync( 'assets/sass/main.scss', 'utf-8' );
 
-// Global settings
-module.exports = {
+const Settings = {
 	sass: {
-		data:      Fs.readFileSync( 'assets/sass/main.scss', 'utf-8' ),
+		data:      sassFile,
 		variables: {
 			text:           '$AU-color-foreground-text',
 			action:         '$AU-color-foreground-action',
@@ -33,3 +33,6 @@ module.exports = {
 	endpoint: '/chameleon',
 	PORT:     process.env.PORT || 3000,
 };
+
+// Global settings
+module.exports = Settings;

@@ -1,5 +1,5 @@
 /**
- * index.js - Chameleon tongues to the sky
+ * server.js - Chameleon tongues to the sky
  */
 
 
@@ -33,20 +33,26 @@ App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
 	}
 
 	// Generate HTML to send back to user
-	const html = await GenerateHTML(
-		request._parsedUrl.pathname,
-		request.query,
-		Settings.endpoint,
-		Settings.path.templates,
-	);
-
-	// Notify Slack!
-	if( process.env.VCAP_SERVICES ) {
-		SendChameleonMessage( request.path, request.query );
+	try {
+		const html = await GenerateHTML(
+			request._parsedUrl.pathname,
+			request.query,
+			Settings.endpoint,
+			Settings.path.templates,
+		);
+	
+		// Notify Slack!
+		if( process.env.VCAP_SERVICES ) {
+			SendChameleonMessage( request.path, request.query );
+		}
+	
+		// Send back the HTML to the user
+		response.send( html );
 	}
-
-	// Send back the HTML to the user
-	response.send( html );
+	catch ( error ) {
+		// console.error(error);
+		throw new Error( error );
+	}
 });
 
 
