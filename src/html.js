@@ -5,7 +5,7 @@
 
 // Dependencies
 const Escape = require( 'escape-html' );
-const Fs = require( 'fs' );
+const Fs = require( 'fs' ).promises;
 
 
 // Local dependencies
@@ -31,12 +31,16 @@ const GenerateHTML = async ( url, query, endpoint, templateDir, { data, variable
 	// Location of the index.html file relative to URL.
 	const templateLocation = `${ cleanURL }/index.html`;
 
-	if( !Fs.existsSync( templateLocation ) ) {
-		throw new Error( `Template not found for ${ Escape( url ) }` );
+	// Check if the template file exists, otherwise send the 404 page.
+	try { 
+		await Fs.stat( templateLocation );
 	}
-
+	catch( error ) {
+		return await Fs.readFile( 'assets/html/404.html', 'utf-8' );
+	}
+	
 	// Get the HTML
-	let template = Fs.readFileSync( templateLocation, 'utf-8' );
+	let template = await Fs.readFile( templateLocation, 'utf-8' );
 
 	// If the user doesn't provide a query just send the normal html
 	if( Object.keys( query ).length === 0 ) {

@@ -2,10 +2,10 @@
 	"name": "chameleon",
 	"version": "1.0.0",
 	"description": "Interactive colour template previews for the Design System.",
-	"main": "src/index.js",
+	"main": "src/server.js",
 	"scripts": {
-		"start": "npm run build && node src/index.js",
-		"watch": "npm run build && nodemon src/index.js",
+		"start": "npm run build && node src/server.js",
+		"watch": "npm run build && nodemon src/server.js",
 		"build:autoprefix": "postcss assets/css/main.css -u autoprefixer -r",
 		"build:sass": "node-sass assets/sass/main.scss assets/css/main.css --output-style compressed",
 		"build": "npm run build:sass && npm run build:autoprefix",

@@ -4,11 +4,10 @@
 
 
 // Dependencies
-const Sass = require( 'node-sass' );
 const Autoprefixer = require( 'autoprefixer' );
 const Postcss = require( 'postcss' );
 const ColorString = require( 'color-string' );
-
+const { RenderSass } = require( './helpers' );
 
 /**
  * Autoprefix - Automatically adds autoprefixes to a css file
@@ -72,7 +71,7 @@ const CreateStyles = async ( query, data, variables ) => {
 
 		// If there are custom styles turn them into an inline <style> tag
 		if( customStyles ) {
-			const { css } = Sass.renderSync({ data: customStyles, outputStyle: 'compressed' });
+			const { css } = await RenderSass( { data: customStyles, outputStyle: 'compressed' } );
 
 			const prefixedCSS = await Autoprefix( css );
 
