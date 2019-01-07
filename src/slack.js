@@ -83,13 +83,13 @@ const GetTemplateFromURL = ( url ) => {
  * GenerateChameleonMessage - Creates a formatted message
  *
  * @param   {string} url   - The URL that hit the API
- * @param   {string} path   - The URL path
+ * @param   {string} path  - The URL path
  * @param   {object} query - The queries that hit the API
  *
  * @returns {string}       - The formatted message
  */
 const GenerateChameleonMessage = ( url, path, query ) => {
-	let message = '---\n_Karma-Karma-Karma-Chameleon!_\n\n';
+	let message = '\n\n_Karma-Karma-Karma-Chameleon!_\n\n';
 
 	if( path ) {
 		const template = GetTemplateFromURL( path );
