@@ -52,7 +52,7 @@ const QueryToHexString = ( query ) => {
 			// If a valid colour add it to object and return hex value
 			if( rgbColor ) {
 				const hexColor = ColorString.to.hex( rgbColor );
-				hexString += `> \`${ colorName }\`: ${ hexColor }\n`;
+				hexString += `\`${ colorName }\`: ${ hexColor }\n`;
 			}
 		});
 
@@ -88,12 +88,12 @@ const GetTemplateFromURL = ( url ) => {
  * @returns {string}       - The formatted message
  */
 const GenerateChameleonMessage = ( path, query ) => {
-	let message = '> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n';
+	let message = '>>> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n';
 
 	const template = GetTemplateFromURL( path );
 	
 	if( path ) {
-		message += `> Generating *${ template }* page template\n\n`;
+		message += `Generating *${ template }* page template\n\n`;
 	}
 
 	if( query !== {}) {
@@ -101,7 +101,9 @@ const GenerateChameleonMessage = ( path, query ) => {
 	}
 
 	// Append a preview URL to message.
-	message += `> https://designsystem.gov.au/templates/${ template }/customise/${ query }`;
+	console.log(query);
+	
+	message += `https://designsystem.gov.au/templates/${ template }/customise${ query }`;
 
 	return message;
 };

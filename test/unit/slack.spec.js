@@ -34,9 +34,9 @@ Describe( 'GenerateChameleonMessage()', () => {
 		const path = '/chameleon/form/';
 		const message = GenerateChameleonMessage( path, query );
 
-		let fixture = '> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n> Generating *form* page template\n\n';
-		fixture += '> `action`: #800080\n> `background`: #FF0000\n';
-		fixture += `> https://designsystem.gov.au/templates/form/customise/${ query }`;
+		let fixture = '>>> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\nGenerating *form* page template\n\n';
+		fixture += '`action`: #800080\n`background`: #FF0000\n';
+		fixture += `https://designsystem.gov.au/templates/form/customise${ query }`;
 
 		Expect( message ).to.equal( fixture );
 	});
@@ -52,7 +52,7 @@ Describe( 'QueryToHexString()', () => {
 			action:     'purple',
 			background: 'red',
 		};
-		Expect( QueryToHexString( query ) ).to.equal( '> `action`: #800080\n> `background`: #FF0000\n' );
+		Expect( QueryToHexString( query ) ).to.equal( '`action`: #800080\n`background`: #FF0000\n' );
 	});
 
 	It( 'Should return "the default palette." given empty request query', () => {
