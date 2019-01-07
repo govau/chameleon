@@ -2,7 +2,7 @@
 applications:
 - name: chameleon
   buildpack: nodejs_buildpack
-  memory: 128M
+  memory: 512M
   instances: 1
   command: node ./node_modules/.bin/pancake && npm run build && node src/server.js
   env: 
