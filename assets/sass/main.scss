@@ -111,4 +111,6 @@ form {
 // Custom error for sass
 .sass-error {
 	@include AU-space( margin, 2unit );
+	background-color: #fff;
+	color: #000;
 }
