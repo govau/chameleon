@@ -92,7 +92,8 @@ const GenerateChameleonMessage = ( path, query ) => {
 	let message = '>>> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n';
 
 	const template = GetTemplateFromURL( path );
-	
+	const queryString = QueryString.stringify( query );
+
 	if( path ) {
 		message += `Generating *${ template }* page template\n\n`;
 	}
@@ -101,8 +102,10 @@ const GenerateChameleonMessage = ( path, query ) => {
 		message += `${ QueryToHexString( query ) }`;
 	}
 
+	console.log(queryString);
+
 	// Append a preview URL to message.
-	message += `https://designsystem.gov.au/templates/${ template }/customise${ QueryString.stringify( query ) }`;
+	message += `https://designsystem.gov.au/templates/${ template }/customise${ queryString }`;
 
 	return message;
 };
