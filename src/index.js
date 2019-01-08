@@ -5,8 +5,6 @@
 
 // Dependencies
 const Express = require( 'express' );
-const Helmet = require( 'helmet' );
-const HelmetCSP = require( 'helmet-csp' );
 const CFonts = require( 'cfonts' );
 const Fs = require( 'fs' );
 
@@ -20,26 +18,11 @@ const SendChameleonMessage = require( './slack' );
 // We are using express for our server
 const App = Express();
 
-// Use helmet to add secure headers
-App.use( Helmet() );
-
-// Add CSP headers for frame-src
-App.use( HelmetCSP( {
-	directives: {
-		frameSrc: ['https://designsystem.gov.au/chameleon']
-	}
-}))
-
 // Link static assets like images to the generated HTML
 App.use( '/chameleon/assets', Express.static( Settings.path.assets ) );
 
 // Handle requests to server on route Settings.serverLocation
 App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
-	// Removed XSS sameorigin policy for local testing
-	if( process.env.NODE_ENV !== 'production' ) {
-		response.removeHeader( 'X-Frame-Options' );
-	}
-
 	// Generate HTML to send back to user
 	try {
 		const html = await GenerateHTML(
