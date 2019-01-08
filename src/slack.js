@@ -76,7 +76,7 @@ const GetTemplateFromURL = ( url ) => {
 		return baseUrl;
 	}
 
-	return 'homepage';
+	return 'home';
 };
 
 
@@ -103,7 +103,7 @@ const GenerateChameleonMessage = ( path, query ) => {
 	}
 
 	// Append a preview URL to message.
-	message += `\nhttps://designsystem.gov.au/templates/${ template }/customise/${ queryString }`;
+	message += `\nhttps://designsystem.gov.au/templates/${ template }/customise/?${ queryString }`;
 
 	return message;
 };

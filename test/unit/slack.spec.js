@@ -65,12 +65,12 @@ Describe( 'QueryToHexString()', () => {
  * GetTemplateFromURL tests
  */
 Describe( 'GetTemplateFromURL()', () => {
-	It( 'Should return the homepage template when requesting /chameleon', () => {
-		Expect( GetTemplateFromURL( '/chameleon' ) ).to.equal( 'homepage' );
+	It( 'Should return the home template when requesting /chameleon', () => {
+		Expect( GetTemplateFromURL( '/chameleon' ) ).to.equal( 'home' );
 	});
 
-	It( 'Should return the homepage template when requesting /chameleon/', () => {
-		Expect( GetTemplateFromURL( '/chameleon/' ) ).to.equal( 'homepage' );
+	It( 'Should return the home template when requesting /chameleon/', () => {
+		Expect( GetTemplateFromURL( '/chameleon/' ) ).to.equal( 'home' );
 	});
 
 	It( 'Should return the content template when requesting /chameleon/content', () => {
