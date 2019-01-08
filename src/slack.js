@@ -105,7 +105,7 @@ const GenerateChameleonMessage = ( path, query ) => {
 	console.log(queryString);
 
 	// Append a preview URL to message.
-	message += `https://designsystem.gov.au/templates/${ template }/customise${ queryString }`;
+	message += `https://designsystem.gov.au/templates/${ template }/customise/${ queryString }`;
 
 	return message;
 };
