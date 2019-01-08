@@ -6,6 +6,7 @@
 // Dependencies
 const Express = require( 'express' );
 const Helmet = require( 'helmet' );
+const HelmetCSP = require( 'helmet-csp' );
 const CFonts = require( 'cfonts' );
 const Fs = require( 'fs' );
 
@@ -21,6 +22,13 @@ const App = Express();
 
 // Use helmet to add secure headers
 App.use( Helmet() );
+
+// Add CSP headers for frame-src
+App.use( HelmetCSP( {
+	directives: {
+		frameSrc: ['https://designsystem.gov.au/chameleon']
+	}
+}))
 
 // Link static assets like images to the generated HTML
 App.use( '/chameleon/assets', Express.static( Settings.path.assets ) );
