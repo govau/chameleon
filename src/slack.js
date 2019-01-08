@@ -6,6 +6,7 @@
 // Depedencies
 const { IncomingWebhook } = require( '@slack/client' );
 const ColorString = require( 'color-string' );
+const QueryString = require( 'querystring' );
 
 
 /**
@@ -101,9 +102,7 @@ const GenerateChameleonMessage = ( path, query ) => {
 	}
 
 	// Append a preview URL to message.
-	console.log(query);
-	
-	message += `https://designsystem.gov.au/templates/${ template }/customise${ query }`;
+	message += `https://designsystem.gov.au/templates/${ template }/customise${ QueryString.stringify( query ) }`;
 
 	return message;
 };
