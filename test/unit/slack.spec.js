@@ -36,7 +36,7 @@ Describe( 'GenerateChameleonMessage()', () => {
 
 		let fixture = '>>> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\nGenerating *form* page template\n\n';
 		fixture += '`action`: #800080\n`background`: #FF0000\n';
-		fixture += `\nhttps://designsystem.gov.au/templates/form/customise/action=purple&background=red`;
+		fixture += `\nhttps://designsystem.gov.au/templates/form/customise/?action=purple&background=red`;
 
 		Expect( message ).to.equal( fixture );
 	});
