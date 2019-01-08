@@ -6,6 +6,7 @@
 // Depedencies
 const { IncomingWebhook } = require( '@slack/client' );
 const ColorString = require( 'color-string' );
+const QueryString = require( 'querystring' );
 
 
 /**
@@ -75,29 +76,34 @@ const GetTemplateFromURL = ( url ) => {
 		return baseUrl;
 	}
 
-	return 'homepage';
+	return 'home';
 };
 
 
 /**
  * GenerateChameleonMessage - Creates a formatted message
  *
- * @param   {string} url   - The url that hit the API
+ * @param   {string} path  - The URL path
  * @param   {object} query - The queries that hit the API
  *
  * @returns {string}       - The formatted message
  */
-const GenerateChameleonMessage = ( url, query ) => {
-	let message = '---\n_Karma-Karma-Karma-Chameleon!_\n\n';
+const GenerateChameleonMessage = ( path, query ) => {
+	let message = '>>> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\n';
 
-	if( url ) {
-		const template = GetTemplateFromURL( url );
+	const template = GetTemplateFromURL( path );
+	const queryString = QueryString.stringify( query );
+
+	if( path ) {
 		message += `Generating *${ template }* page template\n\n`;
 	}
 
 	if( query !== {}) {
-		message += QueryToHexString( query );
+		message += `${ QueryToHexString( query ) }`;
 	}
+
+	// Append a preview URL to message.
+	message += `\nhttps://designsystem.gov.au/templates/${ template }/customise/?${ queryString }`;
 
 	return message;
 };
@@ -106,11 +112,11 @@ const GenerateChameleonMessage = ( url, query ) => {
 /**
  * SendChameleonMessage - Send a slack message to #chameleon
  *
- * @param {string} url   - The url that hit the API
+ * @param {string} path   - The URL path
  * @param {object} query - The queries that hit the API
  */
-const SendChameleonMessage = ( url, query ) => {
-	const message = GenerateChameleonMessage( url, query );
+const SendChameleonMessage = ( path, query ) => {
+	const message = GenerateChameleonMessage( path, query );
 	SendSlackMessage( message );
 };
 
