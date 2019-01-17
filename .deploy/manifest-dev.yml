@@ -8,5 +8,7 @@ applications:
   env: 
     NODE_ENV: development
     NODE_MODULES_CACHE: false
+  routes:
+    - route: designsystem.apps.y.cld.gov.au/chameleon
   services:
     - ups-chameleon
