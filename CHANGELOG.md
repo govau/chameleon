@@ -1,3 +1,8 @@
+# 1.2.0
+ - Added Slack message preview URL.
+ - Spelling tweaks
+
+
 # 1.1.0
  - Implemented asyncronous functionality and Slack integration.
 

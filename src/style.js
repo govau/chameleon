@@ -53,7 +53,7 @@ const CreateStyles = async ( query, data, variables ) => {
 		if( query ) {
 			Object.keys( query ).forEach( ( colorType ) => {
 				// Check if the color inputted comes out as a valid rgb
-				const color = ColorString.get.rgb( query[ colorType ] );
+				const color = ColorString.get.rgb( query[ colorType ].trim() );
 
 				// If there is a valid colour add it to custom styles
 				if( color ) {

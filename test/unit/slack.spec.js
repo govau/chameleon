@@ -30,11 +30,13 @@ Describe( 'GenerateChameleonMessage()', () => {
 			action:     'purple',
 			background: 'red',
 		};
-		const url = '/chameleon/form/';
-		const message = GenerateChameleonMessage( url, query );
 
-		let fixture = '---\n_Karma-Karma-Karma-Chameleon!_\n\nGenerating *form* page template\n\n';
+		const path = '/chameleon/form/';
+		const message = GenerateChameleonMessage( path, query );
+
+		let fixture = '>>> _*Karma-Karma-Karma-Karma-Karma-Chameleon!*_\n\nGenerating *form* page template\n\n';
 		fixture += '`action`: #800080\n`background`: #FF0000\n';
+		fixture += `\nhttps://designsystem.gov.au/templates/form/customise/?action=purple&background=red`;
 
 		Expect( message ).to.equal( fixture );
 	});
@@ -63,12 +65,12 @@ Describe( 'QueryToHexString()', () => {
  * GetTemplateFromURL tests
  */
 Describe( 'GetTemplateFromURL()', () => {
-	It( 'Should return the homepage template when requesting /chameleon', () => {
-		Expect( GetTemplateFromURL( '/chameleon' ) ).to.equal( 'homepage' );
+	It( 'Should return the home template when requesting /chameleon', () => {
+		Expect( GetTemplateFromURL( '/chameleon' ) ).to.equal( 'home' );
 	});
 
-	It( 'Should return the homepage template when requesting /chameleon/', () => {
-		Expect( GetTemplateFromURL( '/chameleon/' ) ).to.equal( 'homepage' );
+	It( 'Should return the home template when requesting /chameleon/', () => {
+		Expect( GetTemplateFromURL( '/chameleon/' ) ).to.equal( 'home' );
 	});
 
 	It( 'Should return the content template when requesting /chameleon/content', () => {
