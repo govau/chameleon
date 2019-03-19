@@ -57,6 +57,7 @@ Wuhuu! thanks for considering contributing! We are always looking to make chamel
 
 ## Release history
 
+- v1.2.1 - Bump dependencies
 - v1.2.0 - Slack improvements
 - v1.1.0 - Implemented asyncronous functionality and Slack integration.
 - v1.0.1 - Refactoring code
