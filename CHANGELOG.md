@@ -1,3 +1,7 @@
+# 1.2.1
+ - Bump dependencies
+ 
+
 # 1.2.0
  - Added Slack message preview URL.
  - Spelling tweaks
