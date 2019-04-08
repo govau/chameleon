@@ -64,7 +64,7 @@
 		"@gov.au/tags": "latest",
 		"@gov.au/text-inputs": "latest",
 		"@slack/client": "^5.0.0",
-		"autoprefixer": "^9.5.0",
+		"autoprefixer": "^9.5.1",
 		"cfonts": "^2.4.2",
 		"color-string": "^1.5.3",
 		"escape-html": "^1.0.3",
