@@ -63,8 +63,8 @@
 		"@gov.au/skip-link": "latest",
 		"@gov.au/tags": "latest",
 		"@gov.au/text-inputs": "latest",
-		"@slack/client": "^4.12.0",
-		"autoprefixer": "^9.5.0",
+		"@slack/client": "^5.0.0",
+		"autoprefixer": "^9.5.1",
 		"cfonts": "^2.4.2",
 		"color-string": "^1.5.3",
 		"escape-html": "^1.0.3",
@@ -79,7 +79,7 @@
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb-base": "^12.1.0",
 		"eslint-plugin-import": "^2.12.0",
-		"mocha": "^6.0.2",
+		"mocha": "^6.1.2",
 		"nodemon": "^1.18.10"
 	},
 	"pancake": {
