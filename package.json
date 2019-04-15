@@ -80,7 +80,7 @@
 		"eslint-config-airbnb-base": "^12.1.0",
 		"eslint-plugin-import": "^2.12.0",
 		"mocha": "^6.1.2",
-		"nodemon": "^1.18.10"
+		"nodemon": "^1.18.11"
 	},
 	"pancake": {
 		"auto-save": true,
