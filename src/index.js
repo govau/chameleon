@@ -19,7 +19,7 @@ const SendChameleonMessage = require( './slack' );
 const App = Express();
 
 // Link static assets like images to the generated HTML
-App.use( '/chameleon/assets', Express.static( Settings.path.assets ) );
+App.use( `${ Settings.endpoint }/assets`, Express.static( Settings.path.assets ) );
 
 // Handle requests to server on route Settings.serverLocation
 App.get( `${ Settings.endpoint }*`, async ( request, response ) => {
