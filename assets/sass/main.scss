@@ -20,12 +20,6 @@ main > .au-body {
 	}
 }
 
-main #banner {
-	@include AU-media( sm ) {
-		@include AU-space( padding, 4unit 0 );
-	}
-}
-
 // Slight grid changes for container fluid
 .au-grid .container-fluid {
 	@include AU-space( max-width, 80unit );
