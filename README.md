@@ -55,16 +55,6 @@ We then serve the API to our users in an iframe, allowing users to modify the us
 Wuhuu! thanks for considering contributing! We are always looking to make chameleon better, please have a look at our [issues](issues) and use the above documentation to make changes and create a pull request.
 
 
-## Release history
-
-- v1.2.1 - Bump dependencies
-- v1.2.0 - Slack improvements
-- v1.1.0 - Implemented asyncronous functionality and Slack integration.
-- v1.0.1 - Refactoring code
-- v1.0.0 - 🎉 Initial release
-
-
-
 # Contributors:
 <div style="display:inline;">
   <a href="https://github.com/adamzerella"><img width="64" height="64" src="https://avatars0.githubusercontent.com/u/1501560?s=460&v=4" alt="Adam A. Zerella"/></a>
