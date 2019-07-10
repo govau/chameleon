@@ -15,11 +15,14 @@ body {
 main > .au-body {
 	@include AU-space( padding, 2unit 0 );
 
+}
+
+main > .banner {
+
 	@include AU-media( sm ) {
 		@include AU-space( padding, 4unit 0 );
 	}
 }
-
 
 // Slight grid changes for container fluid
 .au-grid .container-fluid {
@@ -44,17 +47,6 @@ main > .au-body {
 		@include AU-space( margin-top, 1unit );
 	}
 }
-
-
-// Home page highlighted spacing on mobile
-.highlighted-section .col-sm-4 + .col-sm-4 {
-	@include AU-space( margin-top, 4unit );
-
-	@include AU-media( sm ) {
-		margin-top: 0;
-	}
-}
-
 
 // Mobile side nav spacing
 .au-side-nav {
@@ -93,13 +85,13 @@ form {
 
 	// Text inputs and text areas
 	&.au-text-input:invalid,
-	&.au-text-input.au-text-input--dark:invalid, {
+	&.au-text-input.au-text-input--dark:invalid {
 		background: transparent;
 		border-color: $AU-color-foreground-border;
 	}
 
 	// Radio buttons and control inputs
-	&.au-control-input__input:invalid + .au-control-input__text, {
+	&.au-control-input__input:invalid + .au-control-input__text {
 		background:transparent;
 	}
 
