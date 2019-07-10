@@ -85,13 +85,13 @@ form {
 
 	// Text inputs and text areas
 	&.au-text-input:invalid,
-	&.au-text-input.au-text-input--dark:invalid, {
+	&.au-text-input.au-text-input--dark:invalid {
 		background: transparent;
 		border-color: $AU-color-foreground-border;
 	}
 
 	// Radio buttons and control inputs
-	&.au-control-input__input:invalid + .au-control-input__text, {
+	&.au-control-input__input:invalid + .au-control-input__text {
 		background:transparent;
 	}
 
