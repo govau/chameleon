@@ -110,3 +110,12 @@ form {
 .hide_content {
 	display: none;
 }
+
+.articles-cta {
+	@include AU-space( 'margin-top', 0.25unit );
+	text-align: right;
+
+	@include AU-media( md ) {
+		@include AU-space( 'margin-top', 1unit );
+	}
+}
