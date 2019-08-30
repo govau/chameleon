@@ -106,7 +106,7 @@ function setInvalid( field, message ) {
 	}
 
 	// the error span element
-	var errorField = field.nextElementSibling;
+	var errorField = field.previousElementSibling;
 	RemoveClass( errorField, 'hide_content' );
 	errorField.innerHTML = message;
 
@@ -122,7 +122,7 @@ function setInvalid( field, message ) {
  */
 function setValid( field ) {
 	// the error span element
-	let errorField = field.nextElementSibling;
+	let errorField = field.previousElementSibling;
 
 	if( !HasClass( errorField, 'hide_content' ) ) {
 		AddClass( errorField, 'hide_content' );
