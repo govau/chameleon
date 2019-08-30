@@ -59,15 +59,6 @@ main > .banner {
 
 form {
 	@include AU-space( margin-top, 2unit );
-
-	label + input,
-	label + textarea {
-		@include AU-space( margin-top, .5unit );
-	}
-}
-
-.form-item + .form-item {
-	@include AU-space( margin-top, 2.5unit );
 }
 
 
@@ -117,5 +108,16 @@ form {
 
 	@include AU-media( md ) {
 		@include AU-space( 'margin-top', 1unit );
+	}
+}
+
+.au-header .au-search {
+
+	width: 100%;
+	@include AU-media( xs ) {
+		width: 75%;
+	}
+	@include AU-media( sm ) {
+		width: 100%;
 	}
 }
