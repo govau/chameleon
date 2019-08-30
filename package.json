@@ -60,6 +60,7 @@
 		"@gov.au/pancake": "latest",
 		"@gov.au/progress-indicator": "latest",
 		"@gov.au/responsive-media": "latest",
+		"@gov.au/searchbox": "^0.2.2",
 		"@gov.au/select": "latest",
 		"@gov.au/side-nav": "latest",
 		"@gov.au/skip-link": "latest",
@@ -81,7 +82,7 @@
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb-base": "^12.1.0",
 		"eslint-plugin-import": "^2.12.0",
-		"mocha": "^6.1.2",
+		"mocha": "^6.2.0",
 		"nodemon": "^1.18.10"
 	},
 	"pancake": {
