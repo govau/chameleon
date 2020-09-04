@@ -73,7 +73,7 @@
 		"escape-html": "^1.0.3",
 		"express": "^4.16.4",
 		"gradient-string": "^1.2.0",
-		"node-sass": "^4.11.0",
+		"node-sass": "^4.13.1",
 		"postcss": "^7.0.14",
 		"postcss-cli": "^6.1.2"
 	},
