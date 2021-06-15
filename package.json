@@ -74,7 +74,7 @@
 		"express": "^4.16.4",
 		"gradient-string": "^1.2.0",
 		"node-sass": "^4.11.0",
-		"postcss": "^7.0.14",
+		"postcss": "^7.0.36",
 		"postcss-cli": "^6.1.2"
 	},
 	"devDependencies": {
