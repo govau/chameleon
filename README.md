@@ -1,3 +1,5 @@
+> **The Australian Government Design System has been decommissioned [Visit our community page for more information](https://community.digital.gov.au/t/dta-design-system-has-been-decommissioned/4649)**
+
 # Chameleon 🦎  [![CircleCI](https://circleci.com/gh/govau/chameleon.svg?style=svg)](https://circleci.com/gh/govau/chameleon)
 
 > Interactive colour template previews for the Design System.
